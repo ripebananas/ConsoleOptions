@@ -1,7 +1,6 @@
 ﻿using System;
-using ripebananas.ConsoleOptions.Formatters;
 
-namespace ripebananas.ConsoleOptions
+namespace ripebananas.ConsoleOptions.Formatters
 {
     public class HighlightFormatter<T> : Formatter<T, HighlightFormatterOptions>
         where T : struct, Enum

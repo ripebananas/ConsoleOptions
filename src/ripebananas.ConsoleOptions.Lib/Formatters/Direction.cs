@@ -1,4 +1,4 @@
-﻿namespace ripebananas.ConsoleOptions
+﻿namespace ripebananas.ConsoleOptions.Formatters
 {
     public enum Direction
     {

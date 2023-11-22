@@ -1,7 +1,6 @@
 ﻿using System;
-using ripebananas.ConsoleOptions.Selectors;
 
-namespace ripebananas.ConsoleOptions
+namespace ripebananas.ConsoleOptions.Selectors
 {
     public class HorizontalSingleSelector<T> : SingleSelector<T>
         where T : struct, Enum

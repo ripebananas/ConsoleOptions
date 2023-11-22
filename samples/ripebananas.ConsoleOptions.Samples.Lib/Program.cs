@@ -1,18 +1,16 @@
 ﻿using ripebananas.ConsoleOptions;
+using ripebananas.ConsoleOptions.Formatters;
 using ripebananas.ConsoleOptions.Samples.Lib;
+using ripebananas.ConsoleOptions.Selectors;
 
 HorizontalHighlightSingleSelection();
-
-Console.WriteLine("Press any key to continue");
-Console.ReadKey();
-Console.Clear();
-
+Clear();
 VerticalHighlightSingleSelection();
 
 static void HorizontalHighlightSingleSelection()
 {
     var selected = ConsoleOptionsBuilder.Selection<Options, HorizontalSingleSelector<Options>>()
-        .Prompt("Select an option:")
+        .Prompt("Horizontal single selection:")
         .Formatter<HighlightFormatter<Options>, HighlightFormatterOptions>()
         .FormatterOptions(x => x.Direction = Direction.Horizontal)
         .WaitForSelection();
@@ -23,10 +21,17 @@ static void HorizontalHighlightSingleSelection()
 static void VerticalHighlightSingleSelection()
 {
     var selected = ConsoleOptionsBuilder.Selection<Options, VerticalSingleSelector<Options>>()
-        .Prompt("Select an option:")
+        .Prompt("Vertical single selection:")
         .Formatter<HighlightFormatter<Options>, HighlightFormatterOptions>()
         .FormatterOptions(x => x.Direction = Direction.Vertical)
         .WaitForSelection();
 
     Console.WriteLine($"You selected {selected?.ToString() ?? "<none>"}");
+}
+
+static void Clear()
+{
+    Console.WriteLine("Press any key to continue");
+    Console.ReadKey();
+    Console.Clear();
 }
