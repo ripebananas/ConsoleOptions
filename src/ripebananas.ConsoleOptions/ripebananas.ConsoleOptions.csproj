@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>true</IsPackable>
+    <PackageId>ripebananas.ConsoleOptions</PackageId>
+    <Version>0.0.7</Version>
+    <Description>Very simple interactive options for .NET console apps. Instead of using command line arguments, this package allows interactive selection of options.</Description>
+    <Authors>ripebananas</Authors>
+    <PackageProjectUrl>https://github.com/ripebananas/ConsoleOptions</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+
+</Project>

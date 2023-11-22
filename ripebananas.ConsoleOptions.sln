@@ -1,0 +1,90 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ripebananas.ConsoleOptions", "src\ripebananas.ConsoleOptions\ripebananas.ConsoleOptions.csproj", "{29051A44-46E7-4152-BBEB-38285B08117B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ripebananas.ConsoleOptions.Samples.SingleSelection", "samples\ripebananas.ConsoleOptions.Samples.SingleSelection\ripebananas.ConsoleOptions.Samples.SingleSelection.csproj", "{B4E078FA-D52A-4CD6-8713-044E80EDFF9F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ripebananas.ConsoleOptions.Samples.MultiSelection", "samples\ripebananas.ConsoleOptions.Samples.MultiSelection\ripebananas.ConsoleOptions.Samples.MultiSelection.csproj", "{CFCCF213-BA4A-44C4-8347-1C5776CB5840}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ripebananas.ConsoleOptions.Tests", "tests\ripebananas.ConsoleOptions.Tests\ripebananas.ConsoleOptions.Tests.csproj", "{4A181A9D-FE97-499A-9137-660DD4A6E431}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A9246BE3-755A-4223-A580-AF54E3DA058D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{1A688442-5FBB-43D4-A250-0766449BE656}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{236A0DE5-4FDD-4A74-B87A-F3CDECD28C16}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{70BA12ED-5C6D-4403-95C4-30D1B10220A4}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{D21B7DEB-C977-4F7C-8D51-7C05CE48BEBF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{8DCF63B9-6B82-48D2-A107-07BFB1C614CD}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\manual-nuget-push.yml = .github\workflows\manual-nuget-push.yml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ripebananas.ConsoleOptions.Samples.Customization", "samples\ripebananas.ConsoleOptions.Samples.Customization\ripebananas.ConsoleOptions.Samples.Customization.csproj", "{1862D4DB-B86E-4808-B4A7-4CE1BDD2E8F0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ripebananas.ConsoleOptions.Lib", "src\ripebananas.ConsoleOptions.Lib\ripebananas.ConsoleOptions.Lib.csproj", "{C8E59F45-EABB-465A-89AF-EC069C611DB6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ripebananas.ConsoleOptions.Samples.Lib", "samples\ripebananas.ConsoleOptions.Samples.Lib\ripebananas.ConsoleOptions.Samples.Lib.csproj", "{5E4238FA-1F01-4EA6-90D9-B2E0FB401621}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{29051A44-46E7-4152-BBEB-38285B08117B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29051A44-46E7-4152-BBEB-38285B08117B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29051A44-46E7-4152-BBEB-38285B08117B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29051A44-46E7-4152-BBEB-38285B08117B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4E078FA-D52A-4CD6-8713-044E80EDFF9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4E078FA-D52A-4CD6-8713-044E80EDFF9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4E078FA-D52A-4CD6-8713-044E80EDFF9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4E078FA-D52A-4CD6-8713-044E80EDFF9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFCCF213-BA4A-44C4-8347-1C5776CB5840}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFCCF213-BA4A-44C4-8347-1C5776CB5840}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFCCF213-BA4A-44C4-8347-1C5776CB5840}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFCCF213-BA4A-44C4-8347-1C5776CB5840}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A181A9D-FE97-499A-9137-660DD4A6E431}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A181A9D-FE97-499A-9137-660DD4A6E431}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A181A9D-FE97-499A-9137-660DD4A6E431}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A181A9D-FE97-499A-9137-660DD4A6E431}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1862D4DB-B86E-4808-B4A7-4CE1BDD2E8F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1862D4DB-B86E-4808-B4A7-4CE1BDD2E8F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1862D4DB-B86E-4808-B4A7-4CE1BDD2E8F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1862D4DB-B86E-4808-B4A7-4CE1BDD2E8F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8E59F45-EABB-465A-89AF-EC069C611DB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8E59F45-EABB-465A-89AF-EC069C611DB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8E59F45-EABB-465A-89AF-EC069C611DB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8E59F45-EABB-465A-89AF-EC069C611DB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E4238FA-1F01-4EA6-90D9-B2E0FB401621}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E4238FA-1F01-4EA6-90D9-B2E0FB401621}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E4238FA-1F01-4EA6-90D9-B2E0FB401621}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E4238FA-1F01-4EA6-90D9-B2E0FB401621}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{29051A44-46E7-4152-BBEB-38285B08117B} = {A9246BE3-755A-4223-A580-AF54E3DA058D}
+		{B4E078FA-D52A-4CD6-8713-044E80EDFF9F} = {1A688442-5FBB-43D4-A250-0766449BE656}
+		{CFCCF213-BA4A-44C4-8347-1C5776CB5840} = {1A688442-5FBB-43D4-A250-0766449BE656}
+		{4A181A9D-FE97-499A-9137-660DD4A6E431} = {236A0DE5-4FDD-4A74-B87A-F3CDECD28C16}
+		{D21B7DEB-C977-4F7C-8D51-7C05CE48BEBF} = {70BA12ED-5C6D-4403-95C4-30D1B10220A4}
+		{8DCF63B9-6B82-48D2-A107-07BFB1C614CD} = {D21B7DEB-C977-4F7C-8D51-7C05CE48BEBF}
+		{1862D4DB-B86E-4808-B4A7-4CE1BDD2E8F0} = {1A688442-5FBB-43D4-A250-0766449BE656}
+		{C8E59F45-EABB-465A-89AF-EC069C611DB6} = {A9246BE3-755A-4223-A580-AF54E3DA058D}
+		{5E4238FA-1F01-4EA6-90D9-B2E0FB401621} = {1A688442-5FBB-43D4-A250-0766449BE656}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9897F05F-106D-4E9F-B12F-B89E7BBD5DC0}
+	EndGlobalSection
+EndGlobal
