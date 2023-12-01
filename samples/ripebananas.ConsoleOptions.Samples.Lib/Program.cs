@@ -12,7 +12,12 @@ static void HorizontalHighlightSingleSelection()
     var selected = ConsoleOptionsBuilder.Selection<Options, HorizontalSingleSelector<Options>>()
         .Prompt("Horizontal single selection:")
         .Formatter<HighlightFormatter<Options>, HighlightFormatterOptions>()
-        .FormatterOptions(x => x.Direction = Direction.Horizontal)
+        .FormatterOptions(x =>
+        {
+            x.Direction = Direction.Horizontal;
+            x.CurrentIndicator = "> ".BlueFG();
+            x.NotCurrentIndicator = "  ";
+        })
         .WaitForSelection();
 
     Console.WriteLine($"You selected {selected?.ToString() ?? "<none>"}");
@@ -23,7 +28,12 @@ static void VerticalHighlightSingleSelection()
     var selected = ConsoleOptionsBuilder.Selection<Options, VerticalSingleSelector<Options>>()
         .Prompt("Vertical single selection:")
         .Formatter<HighlightFormatter<Options>, HighlightFormatterOptions>()
-        .FormatterOptions(x => x.Direction = Direction.Vertical)
+        .FormatterOptions(x =>
+        {
+            x.Direction = Direction.Vertical;
+            x.CurrentIndicator = "> ".BlueFG();
+            x.NotCurrentIndicator = "  ";
+        })
         .WaitForSelection();
 
     Console.WriteLine($"You selected {selected?.ToString() ?? "<none>"}");

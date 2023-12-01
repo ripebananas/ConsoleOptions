@@ -9,5 +9,13 @@ namespace ripebananas.ConsoleOptions.Formatters
         public ConsoleColor SelectedBackgroundColor { get; set; } = Console.ForegroundColor;
 
         public Direction Direction { get; set; } = Direction.Vertical;
+
+        public HighlightFormatterOptions()
+        {
+            CurrentIndicator = string.Empty;
+            NotCurrentIndicator = string.Empty;
+            SelectedIndicator = string.Empty;
+            NotSelectedIndicator = string.Empty;
+        }
     }
 }

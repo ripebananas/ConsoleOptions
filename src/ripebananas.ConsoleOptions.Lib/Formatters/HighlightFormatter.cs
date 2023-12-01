@@ -5,12 +5,9 @@ namespace ripebananas.ConsoleOptions.Formatters
     public class HighlightFormatter<T> : Formatter<T, HighlightFormatterOptions>
         where T : struct, Enum
     {
-        protected override string GetCurrentIndicator(PrintValueOptions<T> options) => string.Empty;
-
-        protected override string GetSelectedIndicator(PrintValueOptions<T> options) => string.Empty;
-
         public override void Print(PrintValueOptions<T> options)
         {
+            PrintCurrentIndicator(options);
             PrintDescription(options);
 
             if (Options.Direction == Direction.Vertical)

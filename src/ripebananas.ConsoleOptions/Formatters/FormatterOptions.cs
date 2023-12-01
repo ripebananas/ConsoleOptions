@@ -2,12 +2,12 @@
 {
     public class FormatterOptions
     {
-        public string CurrentIndicator { get; set; } = "→";
+        public virtual string CurrentIndicator { get; set; } = "→";
 
-        public string NotCurrentIndicator { get; set; } = " ";
+        public virtual string NotCurrentIndicator { get; set; } = " ";
 
-        public string SelectedIndicator { get; set; } = "[*]";
+        public virtual string SelectedIndicator { get; set; } = "[*]";
 
-        public string NotSelectedIndicator { get; set; } = "[ ]";
+        public virtual string NotSelectedIndicator { get; set; } = "[ ]";
     }
 }
