@@ -3,6 +3,8 @@ using ripebananas.ConsoleOptions.Formatters;
 using ripebananas.ConsoleOptions.Samples.Lib;
 using ripebananas.ConsoleOptions.Selectors;
 
+Console.OutputEncoding = System.Text.Encoding.UTF8;
+
 HorizontalHighlightSingleSelection();
 Clear();
 VerticalHighlightSingleSelection();
