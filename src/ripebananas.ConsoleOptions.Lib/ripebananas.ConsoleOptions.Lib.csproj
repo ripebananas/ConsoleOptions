@@ -7,7 +7,7 @@
 
     <IsPackable>true</IsPackable>
     <PackageId>ripebananas.ConsoleOptions.Lib</PackageId>
-    <Version>0.0.7</Version>
+    <Version>0.0.8</Version>
     <Description>A collection of pre-built selectors and formatters for the ripebananas.ConsoleOptions package.</Description>
     <Authors>ripebananas</Authors>
     <PackageProjectUrl>https://github.com/ripebananas/ConsoleOptions</PackageProjectUrl>

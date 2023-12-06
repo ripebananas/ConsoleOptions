@@ -71,3 +71,12 @@ Select an option with up/down arrows, Space to mark an option, Enter to submit, 
 ## Customization
 Customization possibilities are available by creating custom classes that inherit from `Formatter<,>` (or implement `IFormatter<,>`) and `FormatterOptions`.
 See the samples folder for details.
+
+## Changes
+
+### Version 0.0.8
+ - Added ANSI coloring codes and related string extension methods to make console colored output easier.
+   E.g. to change the foreground color to red, you could just use
+   ```c#
+   Console.WriteLine("test".RedForeground());
+   ```
