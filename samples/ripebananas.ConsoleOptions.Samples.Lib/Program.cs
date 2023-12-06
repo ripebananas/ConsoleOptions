@@ -17,7 +17,7 @@ static void HorizontalHighlightSingleSelection()
         .FormatterOptions(x =>
         {
             x.Direction = Direction.Horizontal;
-            x.CurrentIndicator = "> ".BlueFG();
+            x.CurrentIndicator = "> ".BlueForeground();
             x.NotCurrentIndicator = "  ";
         })
         .WaitForSelection();
@@ -33,7 +33,7 @@ static void VerticalHighlightSingleSelection()
         .FormatterOptions(x =>
         {
             x.Direction = Direction.Vertical;
-            x.CurrentIndicator = "> ".BlueFG();
+            x.CurrentIndicator = "> ".BlueForeground();
             x.NotCurrentIndicator = "  ";
         })
         .WaitForSelection();

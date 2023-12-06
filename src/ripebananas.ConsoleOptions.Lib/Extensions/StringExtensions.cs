@@ -10,74 +10,74 @@ namespace System
         public static string Background(this string value, ConsoleColor color) =>
             $"{Colors.Background(color)}{value}{Colors.DefaultBackgroundColor}";
 
-        public static string BlackFG(this string value) =>
+        public static string BlackForeground(this string value) =>
             value.Foreground(ConsoleColor.Black);
 
-        public static string DarkRedFG(this string value) =>
+        public static string DarkRedForeground(this string value) =>
             value.Foreground(ConsoleColor.DarkRed);
 
-        public static string DarkGreenFG(this string value) =>
+        public static string DarkGreenForeground(this string value) =>
             value.Foreground(ConsoleColor.DarkGreen);
 
-        public static string DarkYellowFG(this string value) =>
+        public static string DarkYellowForeground(this string value) =>
             value.Foreground(ConsoleColor.DarkYellow);
 
-        public static string DarkBlueFG(this string value) =>
+        public static string DarkBlueForeground(this string value) =>
             value.Foreground(ConsoleColor.DarkBlue);
 
-        public static string DarkMagentaFG(this string value) =>
+        public static string DarkMagentaForeground(this string value) =>
             value.Foreground(ConsoleColor.DarkMagenta);
 
-        public static string DarkCyanFG(this string value) =>
+        public static string DarkCyanForeground(this string value) =>
             value.Foreground(ConsoleColor.DarkCyan);
 
         // Note: "\x1B[37m" seems to be lighter than ConsoleColor.Gray
-        public static string GrayFG(this string value) =>
+        public static string GrayForeground(this string value) =>
             value.Foreground(ConsoleColor.Gray);
 
-        public static string RedFG(this string value) =>
+        public static string RedForeground(this string value) =>
             value.Foreground(ConsoleColor.Red);
 
-        public static string GreenFG(this string value) =>
+        public static string GreenForeground(this string value) =>
             value.Foreground(ConsoleColor.Green);
 
-        public static string YellowFG(this string value) =>
+        public static string YellowForeground(this string value) =>
             value.Foreground(ConsoleColor.Yellow);
 
-        public static string BlueFG(this string value) =>
+        public static string BlueForeground(this string value) =>
             value.Foreground(ConsoleColor.Blue);
 
-        public static string MagentaFG(this string value) =>
+        public static string MagentaForeground(this string value) =>
             value.Foreground(ConsoleColor.Magenta);
 
-        public static string CyanFG(this string value) =>
+        public static string CyanForeground(this string value) =>
             value.Foreground(ConsoleColor.Cyan);
 
-        public static string WhiteFG(this string value) =>
+        public static string WhiteForeground(this string value) =>
             value.Foreground(ConsoleColor.White);
 
-        public static string BlackBG(this string value) =>
+        public static string BlackBackground(this string value) =>
             value.Background(ConsoleColor.Black);
 
-        public static string DarkRedBG(this string value) =>
+        public static string DarkRedBackground(this string value) =>
             value.Background(ConsoleColor.DarkRed);
 
-        public static string DarkGreenBG(this string value) =>
+        public static string DarkGreenBackground(this string value) =>
             value.Background(ConsoleColor.DarkGreen);
 
-        public static string DarkYellowBG(this string value) =>
+        public static string DarkYellowBackground(this string value) =>
             value.Background(ConsoleColor.DarkYellow);
 
-        public static string DarkBlueBG(this string value) =>
+        public static string DarkBlueBackground(this string value) =>
             value.Background(ConsoleColor.DarkBlue);
 
-        public static string DarkMagentaBG(this string value) =>
+        public static string DarkMagentaBackground(this string value) =>
             value.Background(ConsoleColor.DarkMagenta);
 
-        public static string DarkCyanBG(this string value) =>
+        public static string DarkCyanBackground(this string value) =>
             value.Background(ConsoleColor.DarkCyan);
 
-        public static string GrayBG(this string value) =>
+        public static string GrayBackground(this string value) =>
             value.Background(ConsoleColor.Gray);
     }
 }
