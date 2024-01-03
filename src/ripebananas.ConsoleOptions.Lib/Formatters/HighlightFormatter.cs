@@ -3,7 +3,6 @@
 namespace ripebananas.ConsoleOptions.Formatters
 {
     public class HighlightFormatter<T> : Formatter<T, HighlightFormatterOptions>
-        where T : struct, Enum
     {
         public override void Print(PrintValueOptions<T> options)
         {

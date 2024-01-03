@@ -4,7 +4,6 @@ using ripebananas.ConsoleOptions.Formatters;
 namespace ripebananas.ConsoleOptions.Selectors
 {
     public abstract class Selector<T> : ISelector<T>
-        where T : struct, Enum
     {
         protected Selector()
         {
@@ -25,7 +24,7 @@ namespace ripebananas.ConsoleOptions.Selectors
                 {
                     case ConsoleKey.Escape:
                         Console.CursorVisible = true;
-                        return null;
+                        return default;
                     default:
                         if (OnKey(options, key.Key, out var keyResult))
                         {
@@ -59,7 +58,7 @@ namespace ripebananas.ConsoleOptions.Selectors
 
         protected internal virtual bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out T? result)
         {
-            result = null;
+            result = default;
 
             return key switch
             {

@@ -3,13 +3,12 @@
 namespace ripebananas.ConsoleOptions.Selectors
 {
     public class SingleSelector<T> : Selector<T>
-        where T : struct, Enum
     {
         public override bool IsSelected(int index) => false;
 
         protected internal override bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out T? result)
         {
-            result = null;
+            result = default;
 
             switch (key)
             {

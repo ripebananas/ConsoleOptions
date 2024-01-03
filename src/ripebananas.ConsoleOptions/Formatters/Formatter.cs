@@ -4,7 +4,6 @@ using System.Reflection;
 namespace ripebananas.ConsoleOptions.Formatters
 {
     public abstract class Formatter<T, TFO> : IFormatter<T, TFO>
-        where T : struct, Enum
         where TFO : FormatterOptions, new()
     {
         protected readonly TFO _formatterOptions;

@@ -1,9 +1,6 @@
-﻿using System;
-
-namespace ripebananas.ConsoleOptions.Formatters
+﻿namespace ripebananas.ConsoleOptions.Formatters
 {
     public class PrintValueOptions<T>
-        where T : struct, Enum
     {
         public T Value { get; set; }
 

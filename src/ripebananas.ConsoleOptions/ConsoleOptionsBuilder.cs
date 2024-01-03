@@ -6,25 +6,21 @@ namespace ripebananas.ConsoleOptions
 {
     public class ConsoleOptionsBuilder
     {
-        public static IConsoleOptionsBuilder<T, FormatterOptions> SingleSelection<T>()
-            where T : struct, Enum =>
+        public static IConsoleOptionsBuilder<T, FormatterOptions> SingleSelection<T>() =>
             new ConsoleOptionsBuilder<T, FormatterOptions, SingleSelector<T>>(
                 new DefaultSingleSelectorFormatter<T, FormatterOptions>());
 
-        public static IConsoleOptionsBuilder<T, FormatterOptions> MultiSelection<T>()
-            where T : struct, Enum =>
+        public static IConsoleOptionsBuilder<T, FormatterOptions> MultiSelection<T>() =>
             new ConsoleOptionsBuilder<T, FormatterOptions, MultiSelector<T>>(
                 new DefaultMultiSelectorFormatter<T, FormatterOptions>());
 
         public static IConsoleOptionsBuilder<T, FormatterOptions> Selection<T, TS>()
-            where T : struct, Enum
             where TS : ISelector<T>, new() =>
             new ConsoleOptionsBuilder<T, FormatterOptions, TS>(
                 new DefaultSingleSelectorFormatter<T, FormatterOptions>());
     }
 
     internal class ConsoleOptionsBuilder<T, TFO, TS> : IConsoleOptionsBuilder<T, TFO>
-        where T : struct, Enum
         where TFO : FormatterOptions
         where TS : ISelector<T>, new()
     {

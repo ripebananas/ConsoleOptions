@@ -4,7 +4,6 @@ using ripebananas.ConsoleOptions.Formatters;
 namespace ripebananas.ConsoleOptions
 {
     public interface IConsoleOptionsBuilder<T, TFO>
-        where T : struct, Enum
         where TFO : FormatterOptions
     {
         IConsoleOptionsBuilder<T, TFO> Prompt(string prompt);

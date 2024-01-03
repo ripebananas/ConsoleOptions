@@ -3,7 +3,6 @@
 namespace ripebananas.ConsoleOptions.Selectors
 {
     public class HorizontalSingleSelector<T> : SingleSelector<T>
-        where T : struct, Enum
     {
         protected override void Print(ConsoleOptions<T> options)
         {
@@ -13,7 +12,7 @@ namespace ripebananas.ConsoleOptions.Selectors
 
         protected override bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out T? result)
         {
-            result = null;
+            result = default;
 
             return key switch
             {

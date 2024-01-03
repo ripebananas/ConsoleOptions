@@ -3,7 +3,6 @@
 namespace ripebananas.ConsoleOptions.Selectors
 {
     public class MultiSelector<T> : Selector<T>
-        where T : struct, Enum
     {
         private readonly bool[] _optionsSelected;
 
@@ -16,7 +15,7 @@ namespace ripebananas.ConsoleOptions.Selectors
 
         protected internal override bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out T? result)
         {
-            result = null;
+            result = default;
 
             switch (key)
             {
@@ -44,10 +43,10 @@ namespace ripebananas.ConsoleOptions.Selectors
         {
             if (Array.TrueForAll(_optionsSelected, x => !x))
             {
-                return null;
+                return default;
             }
 
-            T? result = null;
+            T? result = default;
 
             for (var i = 0; i < _optionsSelected.Length; i++)
             {

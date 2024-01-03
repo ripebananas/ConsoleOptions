@@ -5,7 +5,6 @@ using ripebananas.ConsoleOptions.Formatters;
 namespace ripebananas.ConsoleOptions
 {
     public class ConsoleOptions<T>
-        where T : struct, Enum
     {
         public T[] Values { get; }
 

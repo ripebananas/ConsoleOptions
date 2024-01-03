@@ -1,12 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <!--<TargetFrameworks>net5.0;net6.0;net7.0;net8.0</TargetFrameworks>-->
+    <TargetFramework>net8.0</TargetFramework>
+    <!--<ImplicitUsings>enable</ImplicitUsings>-->
     <Nullable>enable</Nullable>
 
     <IsPackable>true</IsPackable>
     <PackageId>ripebananas.ConsoleOptions</PackageId>
-    <Version>0.0.8</Version>
+    <Version>1.0.0</Version>
     <Description>Very simple interactive options for .NET console apps. Instead of using command line arguments, this package allows interactive selection of options.</Description>
     <Authors>ripebananas</Authors>
     <PackageProjectUrl>https://github.com/ripebananas/ConsoleOptions</PackageProjectUrl>
