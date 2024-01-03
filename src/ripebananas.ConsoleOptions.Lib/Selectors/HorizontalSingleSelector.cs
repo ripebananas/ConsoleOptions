@@ -10,7 +10,7 @@ namespace ripebananas.ConsoleOptions.Selectors
             Console.WriteLine();
         }
 
-        protected override bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out T? result)
+        protected override bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out T result)
         {
             result = default;
 

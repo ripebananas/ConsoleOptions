@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ripebananas.ConsoleOptions.Selectors
 {
@@ -13,7 +14,7 @@ namespace ripebananas.ConsoleOptions.Selectors
 
         public override bool IsSelected(int index) => _optionsSelected[index];
 
-        protected internal override bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out T? result)
+        protected internal override bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out T result)
         {
             result = default;
 
@@ -39,14 +40,15 @@ namespace ripebananas.ConsoleOptions.Selectors
             }
         }
 
-        private T? BuildResult(ConsoleOptions<T> options)
+        [return: MaybeNull]
+        private T BuildResult(ConsoleOptions<T> options)
         {
             if (Array.TrueForAll(_optionsSelected, x => !x))
             {
                 return default;
             }
 
-            T? result = default;
+            T result = default;
 
             for (var i = 0; i < _optionsSelected.Length; i++)
             {

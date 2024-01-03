@@ -6,7 +6,7 @@ namespace ripebananas.ConsoleOptions.Selectors
     {
         public override bool IsSelected(int index) => false;
 
-        protected internal override bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out T? result)
+        protected internal override bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out T result)
         {
             result = default;
 

@@ -1,7 +1,10 @@
-﻿namespace ripebananas.ConsoleOptions.Selectors
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace ripebananas.ConsoleOptions.Selectors
 {
     public interface ISelector<T>
     {
-        T? WaitForSelection(ConsoleOptions<T> options);
+        [return: MaybeNull]
+        T WaitForSelection(ConsoleOptions<T> options);
     }
 }

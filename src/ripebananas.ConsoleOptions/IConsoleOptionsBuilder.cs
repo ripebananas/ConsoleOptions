@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using ripebananas.ConsoleOptions.Formatters;
 
 namespace ripebananas.ConsoleOptions
@@ -10,15 +11,16 @@ namespace ripebananas.ConsoleOptions
 
         IConsoleOptionsBuilder<T, TFO> DefaultIndex(int index);
 
-        IConsoleOptionsBuilder<T, TFONew> Formatter<TFONew>(IFormatter<T, TFONew> formatter)
-            where TFONew : FormatterOptions;
+        IConsoleOptionsBuilder<T, TFOOther> Formatter<TFOOther>(IFormatter<T, TFOOther> formatter)
+            where TFOOther : FormatterOptions;
 
-        IConsoleOptionsBuilder<T, TFONew> Formatter<TF, TFONew>()
-            where TFONew : FormatterOptions
-            where TF : IFormatter<T, TFONew>, new();
+        IConsoleOptionsBuilder<T, TFOOther> Formatter<TF, TFOOther>()
+            where TFOOther : FormatterOptions
+            where TF : IFormatter<T, TFOOther>, new();
 
         IConsoleOptionsBuilder<T, TFO> FormatterOptions(Action<TFO> configure);
 
-        T? WaitForSelection();
+        [return: MaybeNull]
+        T WaitForSelection();
     }
 }
