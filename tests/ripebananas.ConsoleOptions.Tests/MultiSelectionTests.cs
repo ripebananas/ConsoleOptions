@@ -23,7 +23,6 @@ public class MultiSelectionTests
         // arrange
         var consoleOptions = new ConsoleOptions<OptionsFlags>(new Mock<IFormatter<OptionsFlags>>().Object);
         var console = new MultiSelector<OptionsFlags>();
-        var randomBool = new RandomBool();
         var index = -1;
         var options = Enum.GetValues<OptionsFlags>();
         var optionsSelected = new bool[options.Length];
@@ -32,8 +31,8 @@ public class MultiSelectionTests
         // act
         for (var i = 0; i < iterations; i++)
         {
-            var down = randomBool.Next();
-            var toggle = randomBool.Next();
+            var down = RandomBool.Next();
+            var toggle = RandomBool.Next();
 
             index += down ? 1 : -1;
             if (index < 0)
@@ -60,7 +59,7 @@ public class MultiSelectionTests
         result.Should().BeTrue();
         if (optionsSelected.Contains(true))
         {
-            selectedOptions.Should().NotBeNull();
+            selectedOptions.Should().NotBe(default);
         }
         for (var i = 0; i < optionsSelected.Length; i++)
         {
@@ -69,22 +68,5 @@ public class MultiSelectionTests
                 (selectedOptions & options[i]).Should().Be(options[i]);
             }
         }
-    }
-
-    [Fact]
-    public void EscapePressed_NoResultReturned()
-    {
-        // arrange
-        var consoleOptions = new ConsoleOptions<OptionsFlags>(new Mock<IFormatter<OptionsFlags>>().Object);
-        var console = new MultiSelector<OptionsFlags>();
-
-        // act
-        console.OnKey(consoleOptions, ConsoleKey.DownArrow, out var _);
-        console.OnKey(consoleOptions, ConsoleKey.Spacebar, out var _);
-        var result = console.OnKey(consoleOptions, ConsoleKey.Escape, out var selectedOption);
-
-        // assert
-        result.Should().BeFalse();
-        selectedOption.Should().BeNull();
     }
 }

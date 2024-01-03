@@ -22,7 +22,7 @@ static void HorizontalHighlightSingleSelection()
         })
         .WaitForSelection();
 
-    Console.WriteLine($"You selected {selected?.ToString() ?? "<none>"}");
+    Console.WriteLine($"You selected {selected}");
 }
 
 static void VerticalHighlightSingleSelection()
@@ -38,7 +38,7 @@ static void VerticalHighlightSingleSelection()
         })
         .WaitForSelection();
 
-    Console.WriteLine($"You selected {selected?.ToString() ?? "<none>"}");
+    Console.WriteLine($"You selected {selected}");
 }
 
 static void Clear()

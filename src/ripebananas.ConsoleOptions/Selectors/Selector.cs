@@ -22,9 +22,6 @@ namespace ripebananas.ConsoleOptions.Selectors
 
                 switch (key.Key)
                 {
-                    case ConsoleKey.Escape:
-                        Console.CursorVisible = true;
-                        return default;
                     default:
                         if (OnKey(options, key.Key, out var keyResult))
                         {

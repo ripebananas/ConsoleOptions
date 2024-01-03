@@ -21,7 +21,7 @@ enum Options
 }
 
 var result = ConsoleOptionsBuilder.SingleSelection<Options>()
-    .Prompt("Select an option with up/down arrows, Enter/Space to submit, Escape to exit:")
+    .Prompt("Select an option with up/down arrows, Enter/Space to submit:")
     .FormatterOptions(x => x.CurrentIndicator = "→" /* this is the default value */)
     .WaitForSelection();
 // result will be Options.Option2, if selected as below
@@ -29,7 +29,7 @@ var result = ConsoleOptionsBuilder.SingleSelection<Options>()
 
 In console:
 ```
-Select an option with up/down arrows, Enter/Space to submit, Escape to exit:
+Select an option with up/down arrows, Enter/Space to submit:
  This is option 1
 →This is option 2
  This is option 3
@@ -50,7 +50,7 @@ enum OptionsFlags
 }
 
 var result = ConsoleOptionsBuilder.MultiSelection<OptionsFlags>()
-    .Prompt("Select an option with up/down arrows, Spacebar to mark an option, Enter to submit, Escape to exit:")
+    .Prompt("Select an option with up/down arrows, Spacebar to mark an option, Enter to submit:")
     .FormatterOptions(x =>
     {
         x.SelectedIndicator = "[✓]"; /* default value is "[*]" */
@@ -62,7 +62,7 @@ var result = ConsoleOptionsBuilder.MultiSelection<OptionsFlags>()
 
 In console:
 ```
-Select an option with up/down arrows, Space to mark an option, Enter to submit, Escape to exit:
+Select an option with up/down arrows, Space to mark an option, Enter to submit:
  [✓]This is option 1
  [ ]This is option 2
 →[✓]This is option 3

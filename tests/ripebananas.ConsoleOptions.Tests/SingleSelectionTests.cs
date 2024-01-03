@@ -25,7 +25,6 @@ public class SingleSelectionTests
         // arrange
         var consoleOptions = new ConsoleOptions<Options>(new Mock<IFormatter<Options>>().Object);
         var console = new SingleSelector<Options>();
-        var randomBool = new RandomBool();
         var index = -1;
         var options = Enum.GetValues<Options>();
         const int iterations = 10;
@@ -33,7 +32,7 @@ public class SingleSelectionTests
         // act
         for (var i = 0; i < iterations; i++)
         {
-            var down = randomBool.Next();
+            var down = RandomBool.Next();
 
             index += down ? 1 : -1;
             if (index < 0)
@@ -51,23 +50,6 @@ public class SingleSelectionTests
 
         // assert
         result.Should().BeTrue();
-        selectedOption.Should().NotBeNull();
         selectedOption.Should().Be(options[index % options.Length]);
-    }
-
-    [Fact]
-    public void EscapePressed_NoResultReturned()
-    {
-        // arrange
-        var consoleOptions = new ConsoleOptions<Options>(new Mock<IFormatter<Options>>().Object);
-        var console = new SingleSelector<Options>();
-
-        // act
-        console.OnKey(consoleOptions, ConsoleKey.DownArrow, out var _);
-        var result = console.OnKey(consoleOptions, ConsoleKey.Escape, out var selectedOption);
-
-        // assert
-        result.Should().BeFalse();
-        selectedOption.Should().BeNull();
     }
 }

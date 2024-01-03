@@ -15,7 +15,7 @@ HorizontalSelection();
 static void Colorization()
 {
     var selected = ConsoleOptionsBuilder.MultiSelection<Options>()
-        .Prompt("Select an option with up/down arrows, Spacebar to mark an option, Enter to submit, Escape to exit:")
+        .Prompt("Select an option with up/down arrows, Spacebar to mark an option, Enter to submit:")
         .Formatter<SampleColorFormatter, SampleColorFormatterOptions>()
         .FormatterOptions(x =>
         {
@@ -29,14 +29,14 @@ static void Colorization()
         })
         .WaitForSelection();
 
-    Console.WriteLine($"You selected {selected?.ToString() ?? "<none>"}");
+    Console.WriteLine($"You selected {selected}");
 }
 
 
 static void HorizontalSelection()
 {
     var selected = ConsoleOptionsBuilder.Selection<Options, SampleHorizontalMultiSelector>()
-        .Prompt("Select an option with left/right arrows, Spacebar to mark an option, Enter to submit, Escape to exit:")
+        .Prompt("Select an option with left/right arrows, Spacebar to mark an option, Enter to submit:")
         .Formatter<SampleHorizontalSelectorFormatter, FormatterOptions>()
         .FormatterOptions(x =>
         {
@@ -45,5 +45,5 @@ static void HorizontalSelection()
         })
         .WaitForSelection();
 
-    Console.WriteLine($"You selected {selected?.ToString() ?? "<none>"}");
+    Console.WriteLine($"You selected {selected}");
 }
