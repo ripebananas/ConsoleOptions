@@ -2,13 +2,13 @@
 using ripebananas.ConsoleOptions.Formatters;
 using ripebananas.ConsoleOptions.Samples.Customization;
 
-Console.OutputEncoding = System.Text.Encoding.UTF8;
+ConsoleWrapper.Instance.OutputEncoding = System.Text.Encoding.UTF8;
 
 Colorization();
 
-Console.WriteLine("Press any key to continue");
-Console.ReadKey();
-Console.Clear();
+ConsoleWrapper.Instance.WriteLine("Press any key to continue");
+ConsoleWrapper.Instance.ReadKey();
+ConsoleWrapper.Instance.Clear();
 
 HorizontalSelection();
 
@@ -29,7 +29,7 @@ static void Colorization()
         })
         .WaitForSelection();
 
-    Console.WriteLine($"You selected {string.Join(", ", selected)}");
+    ConsoleWrapper.Instance.WriteLine($"You selected {selected.BitwiseOr()}");
 }
 
 
@@ -45,5 +45,5 @@ static void HorizontalSelection()
         })
         .WaitForSelection();
 
-    Console.WriteLine($"You selected {string.Join(", ", selected)}");
+    ConsoleWrapper.Instance.WriteLine($"You selected {selected.BitwiseOr()}");
 }

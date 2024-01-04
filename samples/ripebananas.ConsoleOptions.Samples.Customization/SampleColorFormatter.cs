@@ -8,7 +8,7 @@ internal class SampleColorFormatter : Formatter<Options, SampleColorFormatterOpt
     {
         using (new DefaultColorizer())
         {
-            Console.ForegroundColor = Options.CurrentIndicatorForegroundColor;
+            ConsoleWrapper.Instance.ForegroundColor = Options.CurrentIndicatorForegroundColor;
             base.PrintCurrentIndicator(options);
         }
     }
@@ -17,7 +17,7 @@ internal class SampleColorFormatter : Formatter<Options, SampleColorFormatterOpt
     {
         using (new DefaultColorizer())
         {
-            Console.ForegroundColor = Options.SelectedIndicatorForegroundColor;
+            ConsoleWrapper.Instance.ForegroundColor = Options.SelectedIndicatorForegroundColor;
             base.PrintSelectedIndicator(options);
         }
     }
@@ -28,8 +28,8 @@ internal class SampleColorFormatter : Formatter<Options, SampleColorFormatterOpt
         {
             if (options.IsSelected)
             {
-                Console.ForegroundColor = Options.SelectedTextForegroundColor;
-                Console.BackgroundColor = Options.SelectedTextBackgroundColor;
+                ConsoleWrapper.Instance.ForegroundColor = Options.SelectedTextForegroundColor;
+                ConsoleWrapper.Instance.BackgroundColor = Options.SelectedTextBackgroundColor;
             }
             base.PrintDescription(options);
         }

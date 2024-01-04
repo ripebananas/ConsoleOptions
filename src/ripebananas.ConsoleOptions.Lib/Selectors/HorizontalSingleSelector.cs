@@ -9,7 +9,7 @@ namespace ripebananas.ConsoleOptions.Selectors
         protected override void Print(ConsoleOptions<T> options)
         {
             base.Print(options);
-            Console.WriteLine();
+            ConsoleWrapper.Instance.WriteLine();
         }
 
         protected override bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out IEnumerable<T> result)

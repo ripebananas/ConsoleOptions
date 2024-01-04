@@ -18,7 +18,7 @@ namespace ripebananas.ConsoleOptions.Selectors
                 case ConsoleKey.Spacebar:
                     if (options.CurrentIndex > -1)
                     {
-                        Console.CursorVisible = true;
+                        ConsoleWrapper.Instance.CursorVisible = true;
                         result = new[] { options.Values[options.CurrentIndex].Value };
                         return true;
                     }

@@ -9,6 +9,6 @@ internal class SampleHorizontalSelectorFormatter : Formatter<Options, FormatterO
         PrintCurrentIndicator(options);
         PrintSelectedIndicator(options);
         PrintDescription(options);
-        Console.Write("   ");
+        ConsoleWrapper.Instance.Write("   ");
     }
 }

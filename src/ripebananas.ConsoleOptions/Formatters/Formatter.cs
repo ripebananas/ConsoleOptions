@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ripebananas.ConsoleOptions.Formatters
+﻿namespace ripebananas.ConsoleOptions.Formatters
 {
     public abstract class Formatter<T, TFO> : IFormatter<T, TFO>
         where TFO : FormatterOptions, new()
@@ -24,7 +22,7 @@ namespace ripebananas.ConsoleOptions.Formatters
             PrintCurrentIndicator(options);
             PrintSelectedIndicator(options);
             PrintDescription(options);
-            Console.WriteLine();
+            ConsoleWrapper.Instance.WriteLine();
         }
 
         /// <summary>
@@ -32,7 +30,7 @@ namespace ripebananas.ConsoleOptions.Formatters
         /// </summary>
         /// <param name="options"></param>
         protected virtual void PrintCurrentIndicator(PrintValueOptions<T> options) =>
-            Console.Write(GetCurrentIndicator(options));
+            ConsoleWrapper.Instance.Write(GetCurrentIndicator(options));
 
         /// <summary>
         /// Returns a string that denotes the line where the selection cursor is.
@@ -47,7 +45,7 @@ namespace ripebananas.ConsoleOptions.Formatters
         /// </summary>
         /// <param name="options"></param>
         protected virtual void PrintSelectedIndicator(PrintValueOptions<T> options) =>
-            Console.Write(GetSelectedIndicator(options));
+            ConsoleWrapper.Instance.Write(GetSelectedIndicator(options));
 
         /// <summary>
         /// Returns a string that denotes if an option is selected.
@@ -62,6 +60,6 @@ namespace ripebananas.ConsoleOptions.Formatters
         /// </summary>
         /// <param name="options"></param>
         protected virtual void PrintDescription(PrintValueOptions<T> options) =>
-            Console.Write(options.Value.Description);
+            ConsoleWrapper.Instance.Write(options.Value.Description);
     }
 }

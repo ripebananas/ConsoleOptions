@@ -4,9 +4,9 @@ namespace ripebananas.ConsoleOptions.Formatters
 {
     public class HighlightFormatterOptions : FormatterOptions
     {
-        public ConsoleColor SelectedForegroundColor { get; set; } = Console.BackgroundColor;
+        public ConsoleColor SelectedForegroundColor { get; set; } = ConsoleWrapper.Instance.BackgroundColor;
 
-        public ConsoleColor SelectedBackgroundColor { get; set; } = Console.ForegroundColor;
+        public ConsoleColor SelectedBackgroundColor { get; set; } = ConsoleWrapper.Instance.ForegroundColor;
 
         public Direction Direction { get; set; } = Direction.Vertical;
 

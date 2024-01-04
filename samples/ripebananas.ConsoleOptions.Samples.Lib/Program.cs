@@ -3,7 +3,7 @@ using ripebananas.ConsoleOptions.Formatters;
 using ripebananas.ConsoleOptions.Samples.Lib;
 using ripebananas.ConsoleOptions.Selectors;
 
-Console.OutputEncoding = System.Text.Encoding.UTF8;
+ConsoleWrapper.Instance.OutputEncoding = System.Text.Encoding.UTF8;
 
 HorizontalHighlightSingleSelection();
 Clear();
@@ -22,7 +22,7 @@ static void HorizontalHighlightSingleSelection()
         })
         .WaitForSelection();
 
-    Console.WriteLine($"You selected {selected.Single()}");
+    ConsoleWrapper.Instance.WriteLine($"You selected {selected.Single()}");
 }
 
 static void VerticalHighlightSingleSelection()
@@ -38,12 +38,12 @@ static void VerticalHighlightSingleSelection()
         })
         .WaitForSelection();
 
-    Console.WriteLine($"You selected {selected.Single()}");
+    ConsoleWrapper.Instance.WriteLine($"You selected {selected.Single()}");
 }
 
 static void Clear()
 {
-    Console.WriteLine("Press any key to continue");
-    Console.ReadKey();
-    Console.Clear();
+    ConsoleWrapper.Instance.WriteLine("Press any key to continue");
+    ConsoleWrapper.Instance.ReadKey();
+    ConsoleWrapper.Instance.Clear();
 }

@@ -25,8 +25,8 @@ namespace ripebananas.ConsoleOptions
             }
             Values = values;
             Formatter = formatter ?? throw new ArgumentNullException(nameof(formatter));
-            CursorLeft = Console.CursorLeft;
-            CursorTop = Console.CursorTop;
+            CursorLeft = ConsoleWrapper.Instance.CursorLeft;
+            CursorTop = ConsoleWrapper.Instance.CursorTop;
         }
     }
 }

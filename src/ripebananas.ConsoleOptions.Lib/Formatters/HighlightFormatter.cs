@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ripebananas.ConsoleOptions.Formatters
+﻿namespace ripebananas.ConsoleOptions.Formatters
 {
     public class HighlightFormatter<T> : Formatter<T, HighlightFormatterOptions>
     {
@@ -11,11 +9,11 @@ namespace ripebananas.ConsoleOptions.Formatters
 
             if (Options.Direction == Direction.Vertical)
             {
-                Console.WriteLine();
+                ConsoleWrapper.Instance.WriteLine();
             }
             else
             {
-                Console.Write(" ");
+                ConsoleWrapper.Instance.Write(" ");
             }
         }
 
@@ -25,8 +23,8 @@ namespace ripebananas.ConsoleOptions.Formatters
             {
                 if (options.IsCurrent)
                 {
-                    Console.ForegroundColor = Options.SelectedForegroundColor;
-                    Console.BackgroundColor = Options.SelectedBackgroundColor;
+                    ConsoleWrapper.Instance.ForegroundColor = Options.SelectedForegroundColor;
+                    ConsoleWrapper.Instance.BackgroundColor = Options.SelectedBackgroundColor;
                 }
                 base.PrintDescription(options);
             }

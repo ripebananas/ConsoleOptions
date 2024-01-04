@@ -1,16 +1,4 @@
-﻿//
-// ███╗   ██╗ ██████╗ ████████╗███████╗
-// ████╗  ██║██╔═══██╗╚══██╔══╝██╔════╝
-// ██╔██╗ ██║██║   ██║   ██║   █████╗
-// ██║╚██╗██║██║   ██║   ██║   ██╔══╝
-// ██║ ╚████║╚██████╔╝   ██║   ███████╗
-// ╚═╝  ╚═══╝ ╚═════╝    ╚═╝   ╚══════╝
-// ------------------------------------------------
-//
-// The tests are only runnable with `dotnet test` command, because of dependency on System.Console.
-//
-
-using ripebananas.ConsoleOptions.Formatters;
+﻿using ripebananas.ConsoleOptions.Formatters;
 using ripebananas.ConsoleOptions.Selectors;
 
 namespace ripebananas.ConsoleOptions.Tests;

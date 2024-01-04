@@ -9,7 +9,7 @@ namespace ripebananas.ConsoleOptions.Selectors
     {
         protected Selector()
         {
-            Console.CursorVisible = false;
+            ConsoleWrapper.Instance.CursorVisible = false;
         }
 
         public abstract bool IsSelected(int index);
@@ -20,7 +20,7 @@ namespace ripebananas.ConsoleOptions.Selectors
 
             while (true)
             {
-                var key = Console.ReadKey(true);
+                var key = ConsoleWrapper.Instance.ReadKey(true);
 
                 switch (key.Key)
                 {
@@ -36,11 +36,11 @@ namespace ripebananas.ConsoleOptions.Selectors
 
         protected virtual void Print(ConsoleOptions<T> options)
         {
-            Console.SetCursorPosition(options.CursorLeft, options.CursorTop);
+            ConsoleWrapper.Instance.SetCursorPosition(options.CursorLeft, options.CursorTop);
 
             if (!string.IsNullOrWhiteSpace(options.Prompt))
             {
-                Console.WriteLine(options.Prompt);
+                ConsoleWrapper.Instance.WriteLine(options.Prompt);
             }
 
             for (var i = 0; i < options.Values.Length; i++)

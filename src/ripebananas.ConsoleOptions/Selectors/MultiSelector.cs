@@ -24,7 +24,7 @@ namespace ripebananas.ConsoleOptions.Selectors
                 case ConsoleKey.Enter:
                     if (options.CurrentIndex > -1)
                     {
-                        Console.CursorVisible = true;
+                        ConsoleWrapper.Instance.CursorVisible = true;
                         result = BuildResult(options);
                         return true;
                     }
@@ -51,16 +51,6 @@ namespace ripebananas.ConsoleOptions.Selectors
                 }
 
                 yield return options.Values[i].Value;
-
-                //if (result == null)
-                //{
-                //    result = 
-                //}
-                //else
-                //{
-                //    // no bitwise OR for generic enums, hence the casts
-                //    result = (T)(object)((int)(object)result | (int)(object)options.Values[i]);
-                //}
             }
         }
     }

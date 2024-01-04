@@ -7,7 +7,7 @@ internal class SampleHorizontalMultiSelector : MultiSelector<Options>
     protected override void Print(ConsoleOptions<Options> options)
     {
         base.Print(options);
-        Console.WriteLine();
+        ConsoleWrapper.Instance.WriteLine();
     }
 
     protected override bool OnKey(ConsoleOptions<Options> options, ConsoleKey key, out IEnumerable<Options> result)
