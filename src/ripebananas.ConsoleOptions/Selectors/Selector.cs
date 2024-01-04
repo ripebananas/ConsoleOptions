@@ -45,9 +45,8 @@ namespace ripebananas.ConsoleOptions.Selectors
 
             for (var i = 0; i < options.Values.Length; i++)
             {
-                options.Formatter.Print(new PrintValueOptions<T>
+                options.Formatter.Print(new PrintValueOptions<T>(options.Values[i])
                 {
-                    Value = options.Values[i],
                     Index = i,
                     IsCurrent = i == options.CurrentIndex,
                     IsSelected = IsSelected(i)

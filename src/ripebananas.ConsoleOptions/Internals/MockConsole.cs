@@ -15,7 +15,7 @@ namespace ripebananas.ConsoleOptions.Internals
 
         public ConsoleColor ForegroundColor { get => default; set { } }
 
-        public Encoding OutputEncoding { get => default; set { } }
+        public Encoding OutputEncoding { get => Encoding.ASCII; set { } }
 
         public void Clear() { }
 
@@ -25,10 +25,10 @@ namespace ripebananas.ConsoleOptions.Internals
 
         public void SetCursorPosition(int cursorLeft, int cursorTop) { }
 
-        public void Write(string value) { }
+        public void Write(string? value) { }
 
         public void WriteLine() { }
 
-        public void WriteLine(string value) { }
+        public void WriteLine(string? value) { }
     }
 }

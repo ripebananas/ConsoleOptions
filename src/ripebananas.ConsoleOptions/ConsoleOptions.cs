@@ -19,7 +19,7 @@ namespace ripebananas.ConsoleOptions
 
         public ConsoleOptions(IFormatter<T> formatter, OptionDescription<T>[] values)
         {
-            if (values?.Length == 0)
+            if (values == null || values.Length == 0)
             {
                 throw new ArgumentException($"The enum {typeof(T).Name} has no values.");
             }

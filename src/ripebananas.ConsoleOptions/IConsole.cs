@@ -25,10 +25,10 @@ namespace ripebananas.ConsoleOptions
 
         void SetCursorPosition(int cursorLeft, int cursorTop);
 
-        void Write(string value);
+        void Write(string? value);
 
         void WriteLine();
 
-        void WriteLine(string value);
+        void WriteLine(string? value);
     }
 }

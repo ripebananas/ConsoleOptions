@@ -50,10 +50,10 @@ namespace ripebananas.ConsoleOptions.Internals
         public void SetCursorPosition(int cursorLeft, int cursorTop) =>
             Console.SetCursorPosition(cursorLeft, cursorTop);
 
-        public void Write(string value) => Console.Write(value);
+        public void Write(string? value) => Console.Write(value);
 
         public void WriteLine() => Console.WriteLine();
 
-        public void WriteLine(string value) => Console.WriteLine(value);
+        public void WriteLine(string? value) => Console.WriteLine(value);
     }
 }
