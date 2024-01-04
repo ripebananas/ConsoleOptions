@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ripebananas.ConsoleOptions.Selectors
 {
@@ -6,9 +8,9 @@ namespace ripebananas.ConsoleOptions.Selectors
     {
         public override bool IsSelected(int index) => false;
 
-        protected internal override bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out T result)
+        protected internal override bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out IEnumerable<T> result)
         {
-            result = default;
+            result = Enumerable.Empty<T>();
 
             switch (key)
             {
@@ -17,7 +19,7 @@ namespace ripebananas.ConsoleOptions.Selectors
                     if (options.CurrentIndex > -1)
                     {
                         Console.CursorVisible = true;
-                        result = options.Values[options.CurrentIndex];
+                        result = new[] { options.Values[options.CurrentIndex].Value };
                         return true;
                     }
                     return false;

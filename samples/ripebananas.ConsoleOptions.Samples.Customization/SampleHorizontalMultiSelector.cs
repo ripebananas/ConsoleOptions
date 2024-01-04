@@ -10,7 +10,7 @@ internal class SampleHorizontalMultiSelector : MultiSelector<Options>
         Console.WriteLine();
     }
 
-    protected override bool OnKey(ConsoleOptions<Options> options, ConsoleKey key, out Options result)
+    protected override bool OnKey(ConsoleOptions<Options> options, ConsoleKey key, out IEnumerable<Options> result)
     {
         return key switch
         {

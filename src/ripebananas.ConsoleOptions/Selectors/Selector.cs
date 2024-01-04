@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
+using System.Linq;
 using ripebananas.ConsoleOptions.Formatters;
 
 namespace ripebananas.ConsoleOptions.Selectors
@@ -13,8 +14,7 @@ namespace ripebananas.ConsoleOptions.Selectors
 
         public abstract bool IsSelected(int index);
 
-        [return: MaybeNull]
-        public virtual T WaitForSelection(ConsoleOptions<T> options)
+        public virtual IEnumerable<T> WaitForSelection(ConsoleOptions<T> options)
         {
             Print(options);
 
@@ -55,9 +55,9 @@ namespace ripebananas.ConsoleOptions.Selectors
             }
         }
 
-        protected internal virtual bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out T result)
+        protected internal virtual bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out IEnumerable<T> result)
         {
-            result = default;
+            result = Enumerable.Empty<T>();
 
             return key switch
             {

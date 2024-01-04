@@ -21,11 +21,13 @@ public class MultiSelectionTests
     public void DownOrUpArrowKeysPressedRandomly_SelectedOptionsShouldBeReturnedCorrectly()
     {
         // arrange
-        var consoleOptions = new ConsoleOptions<OptionsFlags>(new Mock<IFormatter<OptionsFlags>>().Object);
+        var consoleOptions = new ConsoleOptions<OptionsFlags>(
+            new Mock<IFormatter<OptionsFlags>>().Object,
+            OptionDescriptions.GetFromEnum<OptionsFlags>().ToArray());
         var console = new MultiSelector<OptionsFlags>();
         var index = -1;
         var options = Enum.GetValues<OptionsFlags>();
-        var optionsSelected = new bool[options.Length];
+        var selectedOptions = new bool[options.Length];
         const int iterations = 10;
 
         // act
@@ -49,23 +51,25 @@ public class MultiSelectionTests
             if (toggle)
             {
                 console.OnKey(consoleOptions, ConsoleKey.Spacebar, out var _);
-                optionsSelected[index] = !optionsSelected[index];
+                selectedOptions[index] = !selectedOptions[index];
             }
         }
 
-        var result = console.OnKey(consoleOptions, ConsoleKey.Enter, out var selectedOptions);
+        var resultReturned = console.OnKey(consoleOptions, ConsoleKey.Enter, out var result);
 
         // assert
-        result.Should().BeTrue();
-        if (optionsSelected.Contains(true))
+        resultReturned.Should().BeTrue();
+        if (selectedOptions.Contains(true))
         {
-            selectedOptions.Should().NotBe(default);
+            result.Should().NotBeEmpty();
         }
-        for (var i = 0; i < optionsSelected.Length; i++)
+        var resultIndex = 0;
+        for (var i = 0; i < selectedOptions.Length; i++)
         {
-            if (optionsSelected[i])
+            if (selectedOptions[i])
             {
-                (selectedOptions & options[i]).Should().Be(options[i]);
+                result.ElementAt(resultIndex).Should().Be(options[i]);
+                resultIndex++;
             }
         }
     }

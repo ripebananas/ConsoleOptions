@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Linq;
 using ripebananas.ConsoleOptions.Formatters;
 
 namespace ripebananas.ConsoleOptions
 {
     public class ConsoleOptions<T>
     {
-        public T[] Values { get; }
+        public OptionDescription<T>[] Values { get; }
 
         public IFormatter<T> Formatter { get; set; }
 
@@ -18,13 +17,13 @@ namespace ripebananas.ConsoleOptions
 
         public int CursorTop { get; }
 
-        public ConsoleOptions(IFormatter<T> formatter)
+        public ConsoleOptions(IFormatter<T> formatter, OptionDescription<T>[] values)
         {
-            Values = Enum.GetValues(typeof(T)).OfType<T>().ToArray();
-            if (Values.Length == 0)
+            if (values?.Length == 0)
             {
                 throw new ArgumentException($"The enum {typeof(T).Name} has no values.");
             }
+            Values = values;
             Formatter = formatter ?? throw new ArgumentNullException(nameof(formatter));
             CursorLeft = Console.CursorLeft;
             CursorTop = Console.CursorTop;

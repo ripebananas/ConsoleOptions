@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
 using ripebananas.ConsoleOptions.Formatters;
 
 namespace ripebananas.ConsoleOptions
@@ -20,7 +20,6 @@ namespace ripebananas.ConsoleOptions
 
         IConsoleOptionsBuilder<T, TFO> FormatterOptions(Action<TFO> configure);
 
-        [return: MaybeNull]
-        T WaitForSelection();
+        IEnumerable<T> WaitForSelection();
     }
 }

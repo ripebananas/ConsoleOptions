@@ -11,7 +11,7 @@ VerticalHighlightSingleSelection();
 
 static void HorizontalHighlightSingleSelection()
 {
-    var selected = ConsoleOptionsBuilder.Selection<Options, HorizontalSingleSelector<Options>>()
+    var selected = ConsoleOptionsBuilder.Selection<Options, HorizontalSingleSelector<Options>>(OptionDescriptions.GetFromEnum<Options>().ToArray())
         .Prompt("Horizontal single selection:")
         .Formatter<HighlightFormatter<Options>, HighlightFormatterOptions>()
         .FormatterOptions(x =>
@@ -22,12 +22,12 @@ static void HorizontalHighlightSingleSelection()
         })
         .WaitForSelection();
 
-    Console.WriteLine($"You selected {selected}");
+    Console.WriteLine($"You selected {selected.Single()}");
 }
 
 static void VerticalHighlightSingleSelection()
 {
-    var selected = ConsoleOptionsBuilder.Selection<Options, VerticalSingleSelector<Options>>()
+    var selected = ConsoleOptionsBuilder.Selection<Options, VerticalSingleSelector<Options>>(OptionDescriptions.GetFromEnum<Options>().ToArray())
         .Prompt("Vertical single selection:")
         .Formatter<HighlightFormatter<Options>, HighlightFormatterOptions>()
         .FormatterOptions(x =>
@@ -38,7 +38,7 @@ static void VerticalHighlightSingleSelection()
         })
         .WaitForSelection();
 
-    Console.WriteLine($"You selected {selected}");
+    Console.WriteLine($"You selected {selected.Single()}");
 }
 
 static void Clear()

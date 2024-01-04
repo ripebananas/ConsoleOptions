@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
 using ripebananas.ConsoleOptions.Formatters;
 using ripebananas.ConsoleOptions.Selectors;
 
@@ -7,18 +7,18 @@ namespace ripebananas.ConsoleOptions
 {
     public class ConsoleOptionsBuilder
     {
-        public static IConsoleOptionsBuilder<T, FormatterOptions> SingleSelection<T>() =>
+        public static IConsoleOptionsBuilder<T, FormatterOptions> SingleSelection<T>(OptionDescription<T>[] values) =>
             new ConsoleOptionsBuilder<T, FormatterOptions, SingleSelector<T>>(
-                new DefaultSingleSelectorFormatter<T, FormatterOptions>());
+                new DefaultSingleSelectorFormatter<T, FormatterOptions>(), values);
 
-        public static IConsoleOptionsBuilder<T, FormatterOptions> MultiSelection<T>() =>
+        public static IConsoleOptionsBuilder<T, FormatterOptions> MultiSelection<T>(OptionDescription<T>[] values) =>
             new ConsoleOptionsBuilder<T, FormatterOptions, MultiSelector<T>>(
-                new DefaultMultiSelectorFormatter<T, FormatterOptions>());
+                new DefaultMultiSelectorFormatter<T, FormatterOptions>(), values);
 
-        public static IConsoleOptionsBuilder<T, FormatterOptions> Selection<T, TS>()
+        public static IConsoleOptionsBuilder<T, FormatterOptions> Selection<T, TS>(OptionDescription<T>[] values)
             where TS : ISelector<T>, new() =>
             new ConsoleOptionsBuilder<T, FormatterOptions, TS>(
-                new DefaultSingleSelectorFormatter<T, FormatterOptions>());
+                new DefaultSingleSelectorFormatter<T, FormatterOptions>(), values);
     }
 
     internal class ConsoleOptionsBuilder<T, TFO, TS> : IConsoleOptionsBuilder<T, TFO>
@@ -29,14 +29,14 @@ namespace ripebananas.ConsoleOptions
 
         internal ConsoleOptions<T> Options { get; set; }
 
-        internal ConsoleOptionsBuilder(IFormatter<T, TFO> formatter)
-            : this(null, formatter)
+        internal ConsoleOptionsBuilder(IFormatter<T, TFO> formatter, OptionDescription<T>[] values)
+            : this(new ConsoleOptions<T>(formatter, values), formatter)
         {
         }
 
-        internal ConsoleOptionsBuilder(ConsoleOptions<T>? options, IFormatter<T, TFO> formatter)
+        internal ConsoleOptionsBuilder(ConsoleOptions<T> options, IFormatter<T, TFO> formatter)
         {
-            Options = options ?? new ConsoleOptions<T>(formatter);
+            Options = options;
             Options.Formatter = formatter;
             _formatter = formatter;
         }
@@ -61,10 +61,8 @@ namespace ripebananas.ConsoleOptions
         }
 
         public IConsoleOptionsBuilder<T, TFOOther> Formatter<TFOOther>(IFormatter<T, TFOOther> formatter)
-            where TFOOther : FormatterOptions
-        {
-            return new ConsoleOptionsBuilder<T, TFOOther, TS>(Options, formatter);
-        }
+            where TFOOther : FormatterOptions =>
+            new ConsoleOptionsBuilder<T, TFOOther, TS>(Options, formatter);
 
         public IConsoleOptionsBuilder<T, TFOOther> Formatter<TF, TFOOther>()
             where TF : IFormatter<T, TFOOther>, new()
@@ -77,10 +75,7 @@ namespace ripebananas.ConsoleOptions
             return this;
         }
 
-        [return: MaybeNull]
-        public T WaitForSelection()
-        {
-            return new TS().WaitForSelection(Options);
-        }
+        public IEnumerable<T> WaitForSelection() =>
+            new TS().WaitForSelection(Options);
     }
 }

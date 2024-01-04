@@ -2,7 +2,7 @@
 {
     public class PrintValueOptions<T>
     {
-        public T Value { get; set; }
+        public OptionDescription<T> Value { get; set; }
 
         public int Index { get; set; }
 

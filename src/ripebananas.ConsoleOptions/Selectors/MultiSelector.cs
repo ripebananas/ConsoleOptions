@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ripebananas.ConsoleOptions.Selectors
 {
@@ -14,9 +15,9 @@ namespace ripebananas.ConsoleOptions.Selectors
 
         public override bool IsSelected(int index) => _optionsSelected[index];
 
-        protected internal override bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out T result)
+        protected internal override bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out IEnumerable<T> result)
         {
-            result = default;
+            result = Enumerable.Empty<T>();
 
             switch (key)
             {
@@ -40,16 +41,8 @@ namespace ripebananas.ConsoleOptions.Selectors
             }
         }
 
-        [return: MaybeNull]
-        private T BuildResult(ConsoleOptions<T> options)
+        private IEnumerable<T> BuildResult(ConsoleOptions<T> options)
         {
-            if (Array.TrueForAll(_optionsSelected, x => !x))
-            {
-                return default;
-            }
-
-            T result = default;
-
             for (var i = 0; i < _optionsSelected.Length; i++)
             {
                 if (!_optionsSelected[i])
@@ -57,18 +50,18 @@ namespace ripebananas.ConsoleOptions.Selectors
                     continue;
                 }
 
-                if (result == null)
-                {
-                    result = options.Values[i];
-                }
-                else
-                {
-                    // no bitwise OR for generic enums, hence the casts
-                    result = (T)(object)((int)(object)result | (int)(object)options.Values[i]);
-                }
-            }
+                yield return options.Values[i].Value;
 
-            return result;
+                //if (result == null)
+                //{
+                //    result = 
+                //}
+                //else
+                //{
+                //    // no bitwise OR for generic enums, hence the casts
+                //    result = (T)(object)((int)(object)result | (int)(object)options.Values[i]);
+                //}
+            }
         }
     }
 }

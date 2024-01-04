@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ripebananas.ConsoleOptions.Selectors
 {
@@ -10,9 +12,9 @@ namespace ripebananas.ConsoleOptions.Selectors
             Console.WriteLine();
         }
 
-        protected override bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out T result)
+        protected override bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out IEnumerable<T> result)
         {
-            result = default;
+            result = Enumerable.Empty<T>();
 
             return key switch
             {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 
 namespace ripebananas.ConsoleOptions.Formatters
 {
@@ -63,21 +62,6 @@ namespace ripebananas.ConsoleOptions.Formatters
         /// </summary>
         /// <param name="options"></param>
         protected virtual void PrintDescription(PrintValueOptions<T> options) =>
-            Console.Write(GetDescription(options));
-
-        /// <summary>
-        /// Returns a string that represents the text of the option.
-        /// </summary>
-        /// <param name="options"></param>
-        protected virtual string? GetDescription(PrintValueOptions<T> options)
-        {
-            var name = options.Value.ToString();
-
-            var attr = typeof(T)
-                .GetField(name)?
-                .GetCustomAttribute<OptionDescriptionAttribute>();
-
-            return attr?.Description ?? name;
-        }
+            Console.Write(options.Value.Description);
     }
 }

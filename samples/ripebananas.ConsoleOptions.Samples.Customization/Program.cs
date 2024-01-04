@@ -14,7 +14,7 @@ HorizontalSelection();
 
 static void Colorization()
 {
-    var selected = ConsoleOptionsBuilder.MultiSelection<Options>()
+    var selected = ConsoleOptionsBuilder.MultiSelection(OptionDescriptions.GetFromEnum<Options>().ToArray())
         .Prompt("Select an option with up/down arrows, Spacebar to mark an option, Enter to submit:")
         .Formatter<SampleColorFormatter, SampleColorFormatterOptions>()
         .FormatterOptions(x =>
@@ -29,13 +29,13 @@ static void Colorization()
         })
         .WaitForSelection();
 
-    Console.WriteLine($"You selected {selected}");
+    Console.WriteLine($"You selected {string.Join(", ", selected)}");
 }
 
 
 static void HorizontalSelection()
 {
-    var selected = ConsoleOptionsBuilder.Selection<Options, SampleHorizontalMultiSelector>()
+    var selected = ConsoleOptionsBuilder.Selection<Options, SampleHorizontalMultiSelector>(OptionDescriptions.GetFromEnum<Options>().ToArray())
         .Prompt("Select an option with left/right arrows, Spacebar to mark an option, Enter to submit:")
         .Formatter<SampleHorizontalSelectorFormatter, FormatterOptions>()
         .FormatterOptions(x =>
@@ -45,5 +45,5 @@ static void HorizontalSelection()
         })
         .WaitForSelection();
 
-    Console.WriteLine($"You selected {selected}");
+    Console.WriteLine($"You selected {string.Join(", ", selected)}");
 }

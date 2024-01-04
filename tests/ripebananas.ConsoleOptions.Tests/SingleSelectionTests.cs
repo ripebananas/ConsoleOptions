@@ -23,7 +23,9 @@ public class SingleSelectionTests
     public void DownOrUpArrowKeysPressedRandomly_SelectedOptionShouldBeReturnedCorrectly(ConsoleKey selectKey)
     {
         // arrange
-        var consoleOptions = new ConsoleOptions<Options>(new Mock<IFormatter<Options>>().Object);
+        var consoleOptions = new ConsoleOptions<Options>(
+            new Mock<IFormatter<Options>>().Object,
+            OptionDescriptions.GetFromEnum<Options>().ToArray());
         var console = new SingleSelector<Options>();
         var index = -1;
         var options = Enum.GetValues<Options>();
@@ -50,6 +52,6 @@ public class SingleSelectionTests
 
         // assert
         result.Should().BeTrue();
-        selectedOption.Should().Be(options[index % options.Length]);
+        selectedOption.First().Should().Be(options[index % options.Length]);
     }
 }
