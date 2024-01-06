@@ -4,18 +4,14 @@ namespace ripebananas.ConsoleOptions.Samples.Customization;
 
 internal class SampleHorizontalMultiSelector : MultiSelector<Options>
 {
-    protected override void Print(ConsoleOptions<Options> options)
-    {
-        base.Print(options);
-        ConsoleWrapper.Instance.WriteLine();
-    }
-
     protected override bool OnKey(ConsoleOptions<Options> options, ConsoleKey key, out IEnumerable<Options> result)
     {
+        result = Enumerable.Empty<Options>();
+
         return key switch
         {
-            ConsoleKey.RightArrow => base.OnKey(options, ConsoleKey.DownArrow, out result),
-            ConsoleKey.LeftArrow => base.OnKey(options, ConsoleKey.UpArrow, out result),
+            ConsoleKey.RightArrow => base.OnNext(options),
+            ConsoleKey.LeftArrow => base.OnPrevious(options),
             _ => base.OnKey(options, key, out result),
         };
     }

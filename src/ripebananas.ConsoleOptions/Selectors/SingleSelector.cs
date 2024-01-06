@@ -16,10 +16,10 @@ namespace ripebananas.ConsoleOptions.Selectors
             {
                 case ConsoleKey.Enter:
                 case ConsoleKey.Spacebar:
-                    if (options.CurrentIndex > -1)
+                    if (options.PrintOptions.CurrentIndex > -1)
                     {
                         ConsoleWrapper.Instance.CursorVisible = true;
-                        result = new[] { options.Values[options.CurrentIndex].Value };
+                        result = new[] { options.PrintOptions.Values[options.PrintOptions.CurrentIndex].Value };
                         return true;
                     }
                     return false;

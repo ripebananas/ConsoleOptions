@@ -43,19 +43,19 @@ namespace ripebananas.ConsoleOptions
 
         public IConsoleOptionsBuilder<T, TFO> Prompt(string prompt)
         {
-            Options.Prompt = prompt;
+            Options.PrintOptions.Prompt = prompt;
             return this;
         }
 
         public IConsoleOptionsBuilder<T, TFO> DefaultIndex(int index)
         {
-            if (index < -1 || index > Options.Values.Length - 1)
+            if (index < -1 || index > Options.PrintOptions.Values.Length - 1)
             {
-                Options.CurrentIndex = -1;
+                Options.PrintOptions.CurrentIndex = -1;
             }
             else
             {
-                Options.CurrentIndex = index;
+                Options.PrintOptions.CurrentIndex = index;
             }
             return this;
         }

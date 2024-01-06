@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ripebananas.ConsoleOptions.Formatters;
 
 namespace ripebananas.ConsoleOptions.Selectors
 {
@@ -9,14 +8,13 @@ namespace ripebananas.ConsoleOptions.Selectors
     {
         protected Selector()
         {
-            ConsoleWrapper.Instance.CursorVisible = false;
         }
 
         public abstract bool IsSelected(int index);
 
         public virtual IEnumerable<T> WaitForSelection(ConsoleOptions<T> options)
         {
-            Print(options);
+            options.Formatter.Print(options.PrintOptions);
 
             while (true)
             {
@@ -34,26 +32,6 @@ namespace ripebananas.ConsoleOptions.Selectors
             }
         }
 
-        protected virtual void Print(ConsoleOptions<T> options)
-        {
-            ConsoleWrapper.Instance.SetCursorPosition(options.CursorLeft, options.CursorTop);
-
-            if (!string.IsNullOrWhiteSpace(options.Prompt))
-            {
-                ConsoleWrapper.Instance.WriteLine(options.Prompt);
-            }
-
-            for (var i = 0; i < options.Values.Length; i++)
-            {
-                options.Formatter.Print(new PrintValueOptions<T>(options.Values[i])
-                {
-                    Index = i,
-                    IsCurrent = i == options.CurrentIndex,
-                    IsSelected = IsSelected(i)
-                });
-            }
-        }
-
         protected internal virtual bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out IEnumerable<T> result)
         {
             result = Enumerable.Empty<T>();
@@ -68,24 +46,24 @@ namespace ripebananas.ConsoleOptions.Selectors
 
         protected virtual bool OnPrevious(ConsoleOptions<T> options)
         {
-            options.CurrentIndex--;
-            if (options.CurrentIndex < 0)
+            options.PrintOptions.CurrentIndex--;
+            if (options.PrintOptions.CurrentIndex < 0)
             {
-                options.CurrentIndex = options.Values.Length - 1;
+                options.PrintOptions.CurrentIndex = options.PrintOptions.Values.Length - 1;
             }
-            Print(options);
+            options.Formatter.Print(options.PrintOptions);
 
             return false;
         }
 
         protected virtual bool OnNext(ConsoleOptions<T> options)
         {
-            options.CurrentIndex++;
-            if (options.CurrentIndex > options.Values.Length - 1)
+            options.PrintOptions.CurrentIndex++;
+            if (options.PrintOptions.CurrentIndex > options.PrintOptions.Values.Length - 1)
             {
-                options.CurrentIndex = 0;
+                options.PrintOptions.CurrentIndex = 0;
             }
-            Print(options);
+            options.Formatter.Print(options.PrintOptions);
 
             return false;
         }

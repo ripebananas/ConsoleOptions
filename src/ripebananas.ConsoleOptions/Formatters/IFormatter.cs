@@ -8,6 +8,6 @@
 
     public interface IFormatter<T>
     {
-        void Print(PrintValueOptions<T> options);
+        void Print(PrintValuesOptions<T> options);
     }
 }

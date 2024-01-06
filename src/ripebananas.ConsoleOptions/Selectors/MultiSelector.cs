@@ -18,11 +18,12 @@ namespace ripebananas.ConsoleOptions.Selectors
         protected internal override bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out IEnumerable<T> result)
         {
             result = Enumerable.Empty<T>();
+            var printValuesOptions = options.PrintOptions;
 
             switch (key)
             {
                 case ConsoleKey.Enter:
-                    if (options.CurrentIndex > -1)
+                    if (printValuesOptions.CurrentIndex > -1)
                     {
                         ConsoleWrapper.Instance.CursorVisible = true;
                         result = BuildResult(options);
@@ -30,10 +31,15 @@ namespace ripebananas.ConsoleOptions.Selectors
                     }
                     return false;
                 case ConsoleKey.Spacebar:
-                    if (options.CurrentIndex > -1)
+                    if (printValuesOptions.CurrentIndex > -1)
                     {
-                        _optionsSelected[options.CurrentIndex] = !_optionsSelected[options.CurrentIndex];
-                        Print(options);
+                        _optionsSelected[printValuesOptions.CurrentIndex] = !_optionsSelected[printValuesOptions.CurrentIndex];
+                        printValuesOptions.SelectedIndices = _optionsSelected
+                            .Select((selected, index) => (selected, index))
+                            .Where(x => x.selected)
+                            .Select(x => x.index)
+                            .ToArray();
+                        options.Formatter.Print(printValuesOptions);
                     }
                     return false;
                 default:
@@ -50,7 +56,7 @@ namespace ripebananas.ConsoleOptions.Selectors
                     continue;
                 }
 
-                yield return options.Values[i].Value;
+                yield return options.PrintOptions.Values[i].Value;
             }
         }
     }
