@@ -10,7 +10,7 @@ public class MultiSelectionTests
     {
         // arrange
         var formatter = new Mock<IFormatter<OptionsFlags>>().Object;
-        var selector = new MultiSelector<OptionsFlags>();
+        var selector = new SingleSelector<OptionsFlags>();
         selector.Options.Values = OptionDescriptions.GetFromEnum<OptionsFlags>().ToArray();
 
         var optionsCount = selector.Options.Values.Length;

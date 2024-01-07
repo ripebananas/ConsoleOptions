@@ -2,7 +2,7 @@
 
 namespace ripebananas.ConsoleOptions.Formatters
 {
-    public abstract class Formatter<T, TFO> : IFormatter<T, TFO>
+    public class Formatter<T, TFO> : IFormatter<T, TFO>
         where TFO : FormatterOptions, new()
     {
         protected readonly TFO _options;
@@ -88,8 +88,14 @@ namespace ripebananas.ConsoleOptions.Formatters
         /// Returns a string that denotes if an option is selected.
         /// Used mainly with multi-selection.
         /// </summary>
-        protected virtual string? GetSelectedIndicator(FormatterPrintOptions.Single<T> options) =>
-            options.IsSelected ? Options.SelectedIndicator : Options.NotSelectedIndicator;
+        protected virtual string? GetSelectedIndicator(FormatterPrintOptions.Single<T> options)
+        {
+            if (!Options.MultiSelection)
+            {
+                return string.Empty;
+            }
+            return options.IsSelected ? Options.SelectedIndicator : Options.NotSelectedIndicator;
+        }
 
         /// <summary>
         /// Prints a string that represents the text of the option.

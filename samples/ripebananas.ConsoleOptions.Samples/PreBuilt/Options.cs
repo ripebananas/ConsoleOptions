@@ -1,4 +1,4 @@
-﻿namespace ripebananas.ConsoleOptions.Samples.Lib;
+﻿namespace ripebananas.ConsoleOptions.Samples.PreBuilt;
 
 [Flags]
 internal enum Options

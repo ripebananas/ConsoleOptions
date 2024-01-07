@@ -7,18 +7,43 @@ namespace ripebananas.ConsoleOptions
 {
     public class ConsoleOptionsBuilder
     {
-        public static IConsoleOptionsBuilder<T, FormatterOptions> SingleSelection<T>(OptionDescription<T>[] values) =>
+        //public static IConsoleOptionsBuilder<T, FormatterOptions> SingleVerticalSelector<T>(OptionDescription<T>[] values) =>
+        //    new ConsoleOptionsBuilder<T, SingleSelector<T>, FormatterOptions>(
+        //        values,
+        //        new Formatter<T, FormatterOptions>());
+
+        //public static IConsoleOptionsBuilder<T, FormatterOptions> MultiVarticalSelector<T>(OptionDescription<T>[] values) =>
+        //    new ConsoleOptionsBuilder<T, MultiSelector<T>, FormatterOptions>(
+        //        values,
+        //        new Formatter<T, FormatterOptions>());
+
+        //public static IConsoleOptionsBuilder<T, FormatterOptions> SingleHorizontalSelector<T>(OptionDescription<T>[] values) =>
+        //    new ConsoleOptionsBuilder<T, SingleSelector<T>, FormatterOptions>(
+        //        values,
+        //        new Formatter<T, FormatterOptions>());
+
+        //public static IConsoleOptionsBuilder<T, FormatterOptions> MultiHorizontalSelector<T>(OptionDescription<T>[] values) =>
+        //    new ConsoleOptionsBuilder<T, MultiSelector<T>, FormatterOptions>(
+        //        values,
+        //        new Formatter<T, FormatterOptions>());
+
+
+
+        public static IConsoleOptionsBuilder<T, FormatterOptions> SingleSelector<T>(OptionDescription<T>[] values) =>
             new ConsoleOptionsBuilder<T, SingleSelector<T>, FormatterOptions>(
-                values, new DefaultSingleSelectorFormatter<T, FormatterOptions>());
+                values,
+                new Formatter<T, FormatterOptions>());
 
-        public static IConsoleOptionsBuilder<T, FormatterOptions> MultiSelection<T>(OptionDescription<T>[] values) =>
+        public static IConsoleOptionsBuilder<T, FormatterOptions> MultiSelector<T>(OptionDescription<T>[] values) =>
             new ConsoleOptionsBuilder<T, MultiSelector<T>, FormatterOptions>(
-                values, new DefaultMultiSelectorFormatter<T, FormatterOptions>());
+                values,
+                new Formatter<T, FormatterOptions>());
 
-        public static IConsoleOptionsBuilder<T, FormatterOptions> Selection<T, TS>(OptionDescription<T>[] values)
+        public static IConsoleOptionsBuilder<T, FormatterOptions> Selector<T, TS>(OptionDescription<T>[] values)
             where TS : ISelector<T>, new() =>
             new ConsoleOptionsBuilder<T, TS, FormatterOptions>(
-                values, new DefaultSingleSelectorFormatter<T, FormatterOptions>());
+                values,
+                new Formatter<T, FormatterOptions>());
     }
 
     internal class ConsoleOptionsBuilder<T, TS, TFO> : IConsoleOptionsBuilder<T, TFO>, IConfigurableConsoleOptionsBuilder<T, TFO>

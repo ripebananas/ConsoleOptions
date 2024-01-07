@@ -12,6 +12,13 @@ namespace ripebananas.ConsoleOptions
             return builder.ConfigureFormatter(x => x.Prompt = prompt);
         }
 
+        public static IConfigurableConsoleOptionsBuilder<T, TFO> MultiSelection<T, TFO>(
+            this IConfigurableConsoleOptionsBuilder<T, TFO> builder)
+            where TFO : FormatterOptions
+        {
+            return builder.ConfigureFormatter(x => x.MultiSelection = true);
+        }
+
         public static IConfigurableConsoleOptionsBuilder<T, TFO> DefaultIndex<T, TFO>(
             this IConfigurableConsoleOptionsBuilder<T, TFO> builder,
             int index)

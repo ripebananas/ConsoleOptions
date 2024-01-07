@@ -47,8 +47,10 @@ namespace ripebananas.ConsoleOptions.Selectors
 
             return key switch
             {
-                ConsoleKey.UpArrow => OnPrevious(formatter),
-                ConsoleKey.DownArrow => OnNext(formatter),
+                ConsoleKey.UpArrow => Options.Direction == Direction.Vertical ? OnPrevious(formatter) : false,
+                ConsoleKey.LeftArrow => Options.Direction == Direction.Horizontal ? OnPrevious(formatter) : false,
+                ConsoleKey.DownArrow => Options.Direction == Direction.Vertical ? OnNext(formatter) : false,
+                ConsoleKey.RightArrow => Options.Direction == Direction.Horizontal ? OnNext(formatter) : false,
                 _ => false,
             };
         }

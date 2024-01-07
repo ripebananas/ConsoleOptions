@@ -3,7 +3,7 @@ using ripebananas.ConsoleOptions.Selectors;
 
 namespace ripebananas.ConsoleOptions.Samples.Customization;
 
-internal class SampleHorizontalMultiSelector : MultiSelector<Options>
+internal class HorizontalMultiSelector : MultiSelector<Options>
 {
     protected override bool OnKey(
         ConsoleKey key,

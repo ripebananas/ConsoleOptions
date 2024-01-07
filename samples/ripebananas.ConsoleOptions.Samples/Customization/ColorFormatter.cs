@@ -2,7 +2,7 @@
 
 namespace ripebananas.ConsoleOptions.Samples.Customization;
 
-internal class SampleColorFormatter : Formatter<Options, SampleColorFormatterOptions>
+internal class ColorFormatter : Formatter<Options, ColorFormatterOptions>
 {
     protected override void PrintCurrentIndicator(FormatterPrintOptions.Single<Options> options)
     {

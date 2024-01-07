@@ -12,8 +12,6 @@ namespace ripebananas.ConsoleOptions.Formatters
         {
             CurrentIndicator = string.Empty;
             NotCurrentIndicator = string.Empty;
-            SelectedIndicator = string.Empty;
-            NotSelectedIndicator = string.Empty;
         }
     }
 }

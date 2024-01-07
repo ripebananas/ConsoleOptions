@@ -10,5 +10,7 @@ namespace ripebananas.ConsoleOptions.Selectors
         public HashSet<int> SelectedIndices { get; } = new HashSet<int>();
 
         public OptionDescription<T>[] Values { get; set; } = Array.Empty<OptionDescription<T>>();
+
+        public virtual Direction Direction { get; set; } = Direction.Vertical;
     }
 }
