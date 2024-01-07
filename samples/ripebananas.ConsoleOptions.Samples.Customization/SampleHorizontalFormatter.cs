@@ -2,9 +2,9 @@
 
 namespace ripebananas.ConsoleOptions.Samples.Customization;
 
-internal class SampleHorizontalSelectorFormatter : Formatter<Options, FormatterOptions>
+internal class SampleHorizontalFormatter : Formatter<Options, FormatterOptions>
 {
-    public override void Print(PrintValueOptions<Options> options)
+    public override void Print(FormatterPrintOptions.Single<Options> options)
     {
         PrintCurrentIndicator(options);
         PrintSelectedIndicator(options);

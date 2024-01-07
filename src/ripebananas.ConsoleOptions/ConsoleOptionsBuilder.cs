@@ -8,74 +8,60 @@ namespace ripebananas.ConsoleOptions
     public class ConsoleOptionsBuilder
     {
         public static IConsoleOptionsBuilder<T, FormatterOptions> SingleSelection<T>(OptionDescription<T>[] values) =>
-            new ConsoleOptionsBuilder<T, FormatterOptions, SingleSelector<T>>(
-                new DefaultSingleSelectorFormatter<T, FormatterOptions>(), values);
+            new ConsoleOptionsBuilder<T, SingleSelector<T>, FormatterOptions>(
+                values, new DefaultSingleSelectorFormatter<T, FormatterOptions>());
 
         public static IConsoleOptionsBuilder<T, FormatterOptions> MultiSelection<T>(OptionDescription<T>[] values) =>
-            new ConsoleOptionsBuilder<T, FormatterOptions, MultiSelector<T>>(
-                new DefaultMultiSelectorFormatter<T, FormatterOptions>(), values);
+            new ConsoleOptionsBuilder<T, MultiSelector<T>, FormatterOptions>(
+                values, new DefaultMultiSelectorFormatter<T, FormatterOptions>());
 
         public static IConsoleOptionsBuilder<T, FormatterOptions> Selection<T, TS>(OptionDescription<T>[] values)
             where TS : ISelector<T>, new() =>
-            new ConsoleOptionsBuilder<T, FormatterOptions, TS>(
-                new DefaultSingleSelectorFormatter<T, FormatterOptions>(), values);
+            new ConsoleOptionsBuilder<T, TS, FormatterOptions>(
+                values, new DefaultSingleSelectorFormatter<T, FormatterOptions>());
     }
 
-    internal class ConsoleOptionsBuilder<T, TFO, TS> : IConsoleOptionsBuilder<T, TFO>
-        where TFO : FormatterOptions
+    internal class ConsoleOptionsBuilder<T, TS, TFO> : IConsoleOptionsBuilder<T, TFO>, IConfigurableConsoleOptionsBuilder<T, TFO>
         where TS : ISelector<T>, new()
+        where TFO : FormatterOptions
     {
+        private readonly ISelector<T> _selector;
         private readonly IFormatter<T, TFO> _formatter;
 
-        internal ConsoleOptions<T> Options { get; set; }
-
-        internal ConsoleOptionsBuilder(IFormatter<T, TFO> formatter, OptionDescription<T>[] values)
-            : this(new ConsoleOptions<T>(formatter, values), formatter)
+        internal ConsoleOptionsBuilder(OptionDescription<T>[] values, IFormatter<T, TFO> formatter)
         {
-        }
-
-        internal ConsoleOptionsBuilder(ConsoleOptions<T> options, IFormatter<T, TFO> formatter)
-        {
-            Options = options;
-            Options.Formatter = formatter;
+            _selector = new TS();
+            _selector.Options.Values = values;
             _formatter = formatter;
         }
 
-        public IConsoleOptionsBuilder<T, TFO> Prompt(string prompt)
+        public IConsoleOptionsBuilder<T, TFONew> Formatter<TFONew>(
+            IFormatter<T, TFONew> formatter,
+            Action<TFONew>? configure = null)
+            where TFONew : FormatterOptions
         {
-            Options.PrintOptions.Prompt = prompt;
+            configure?.Invoke(formatter.Options);
+            return new ConsoleOptionsBuilder<T, TS, TFONew>(_selector.Options.Values, formatter);
+        }
+
+        public IConsoleOptionsBuilder<T, TFONew> Formatter<TF, TFONew>(Action<TFONew>? configure = null)
+            where TF : IFormatter<T, TFONew>, new()
+            where TFONew : FormatterOptions =>
+            Formatter(new TF(), configure);
+
+        public IConfigurableConsoleOptionsBuilder<T, TFO> ConfigureSelector(Action<SelectorOptions<T>> configure)
+        {
+            configure?.Invoke(_selector.Options);
             return this;
         }
 
-        public IConsoleOptionsBuilder<T, TFO> DefaultIndex(int index)
-        {
-            if (index < -1 || index > Options.PrintOptions.Values.Length - 1)
-            {
-                Options.PrintOptions.CurrentIndex = -1;
-            }
-            else
-            {
-                Options.PrintOptions.CurrentIndex = index;
-            }
-            return this;
-        }
-
-        public IConsoleOptionsBuilder<T, TFOOther> Formatter<TFOOther>(IFormatter<T, TFOOther> formatter)
-            where TFOOther : FormatterOptions =>
-            new ConsoleOptionsBuilder<T, TFOOther, TS>(Options, formatter);
-
-        public IConsoleOptionsBuilder<T, TFOOther> Formatter<TF, TFOOther>()
-            where TF : IFormatter<T, TFOOther>, new()
-            where TFOOther : FormatterOptions =>
-            Formatter(new TF());
-
-        public IConsoleOptionsBuilder<T, TFO> FormatterOptions(Action<TFO> configure)
+        public IConfigurableConsoleOptionsBuilder<T, TFO> ConfigureFormatter(Action<TFO> configure)
         {
             configure(_formatter.Options);
             return this;
         }
 
         public IEnumerable<T> WaitForSelection() =>
-            new TS().WaitForSelection(Options);
+            _selector.WaitForSelection(_formatter);
     }
 }

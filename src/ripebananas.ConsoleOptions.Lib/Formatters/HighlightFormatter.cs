@@ -2,22 +2,7 @@
 {
     public class HighlightFormatter<T> : Formatter<T, HighlightFormatterOptions>
     {
-        public override void Print(PrintValueOptions<T> options)
-        {
-            PrintCurrentIndicator(options);
-            PrintDescription(options);
-
-            if (Options.Direction == Direction.Vertical)
-            {
-                ConsoleWrapper.Instance.WriteLine();
-            }
-            else
-            {
-                ConsoleWrapper.Instance.Write(" ");
-            }
-        }
-
-        protected override void PrintDescription(PrintValueOptions<T> options)
+        protected override void PrintDescription(FormatterPrintOptions.Single<T> options)
         {
             using (new DefaultColorizer())
             {

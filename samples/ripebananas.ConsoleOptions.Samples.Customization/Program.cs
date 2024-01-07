@@ -15,9 +15,7 @@ HorizontalSelection();
 static void Colorization()
 {
     var selected = ConsoleOptionsBuilder.MultiSelection(OptionDescriptions.GetFromEnum<Options>().ToArray())
-        .Prompt("Select an option with up/down arrows, Spacebar to mark an option, Enter to submit:")
-        .Formatter<SampleColorFormatter, SampleColorFormatterOptions>()
-        .FormatterOptions(x =>
+        .Formatter<SampleColorFormatter, SampleColorFormatterOptions>(x =>
         {
             x.CurrentIndicator = "→";
             x.SelectedIndicator = "(X)";
@@ -27,6 +25,7 @@ static void Colorization()
             x.SelectedTextForegroundColor = ConsoleColor.Black;
             x.SelectedTextBackgroundColor = ConsoleColor.Gray;
         })
+        .Prompt("Select an option with up/down arrows, Spacebar to mark an option, Enter to submit:")
         .WaitForSelection();
 
     ConsoleWrapper.Instance.WriteLine($"You selected {selected.BitwiseOr()}");
@@ -36,13 +35,12 @@ static void Colorization()
 static void HorizontalSelection()
 {
     var selected = ConsoleOptionsBuilder.Selection<Options, SampleHorizontalMultiSelector>(OptionDescriptions.GetFromEnum<Options>().ToArray())
-        .Prompt("Select an option with left/right arrows, Spacebar to mark an option, Enter to submit:")
-        .Formatter<SampleHorizontalSelectorFormatter, FormatterOptions>()
-        .FormatterOptions(x =>
+        .Formatter<SampleHorizontalFormatter, FormatterOptions>(x =>
         {
             x.CurrentIndicator = "→";
             x.SelectedIndicator = "[X]";
         })
+        .Prompt("Select an option with left/right arrows, Spacebar to mark an option, Enter to submit:")
         .WaitForSelection();
 
     ConsoleWrapper.Instance.WriteLine($"You selected {selected.BitwiseOr()}");

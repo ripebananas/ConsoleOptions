@@ -9,5 +9,9 @@
         public virtual string SelectedIndicator { get; set; } = "[*]";
 
         public virtual string NotSelectedIndicator { get; set; } = "[ ]";
+
+        public virtual string? Prompt { get; set; }
+
+        public virtual Direction Direction { get; set; } = Direction.Vertical;
     }
 }

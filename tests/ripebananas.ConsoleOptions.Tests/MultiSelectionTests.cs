@@ -9,13 +9,14 @@ public class MultiSelectionTests
     public void DownOrUpArrowKeysPressedRandomly_SelectedOptionsShouldBeReturnedCorrectly()
     {
         // arrange
-        var consoleOptions = new ConsoleOptions<OptionsFlags>(
-            new Mock<IFormatter<OptionsFlags>>().Object,
-            OptionDescriptions.GetFromEnum<OptionsFlags>().ToArray());
-        var console = new MultiSelector<OptionsFlags>();
+        var formatter = new Mock<IFormatter<OptionsFlags>>().Object;
+        var selector = new MultiSelector<OptionsFlags>();
+        selector.Options.Values = OptionDescriptions.GetFromEnum<OptionsFlags>().ToArray();
+
+        var optionsCount = selector.Options.Values.Length;
+        var selectedOptions = new bool[optionsCount];
+
         var index = -1;
-        var options = Enum.GetValues<OptionsFlags>();
-        var selectedOptions = new bool[options.Length];
         const int iterations = 10;
 
         // act
@@ -27,23 +28,23 @@ public class MultiSelectionTests
             index += down ? 1 : -1;
             if (index < 0)
             {
-                index = options.Length - 1;
+                index = optionsCount - 1;
             }
-            else if (index >= options.Length)
+            else if (index >= optionsCount)
             {
                 index = 0;
             }
 
-            console.OnKey(consoleOptions, down ? ConsoleKey.DownArrow : ConsoleKey.UpArrow, out var _);
+            selector.OnKey(down ? ConsoleKey.DownArrow : ConsoleKey.UpArrow, formatter, out var _);
 
             if (toggle)
             {
-                console.OnKey(consoleOptions, ConsoleKey.Spacebar, out var _);
+                selector.OnKey(ConsoleKey.Spacebar, formatter, out var _);
                 selectedOptions[index] = !selectedOptions[index];
             }
         }
 
-        var resultReturned = console.OnKey(consoleOptions, ConsoleKey.Enter, out var result);
+        var resultReturned = selector.OnKey(ConsoleKey.Enter, formatter, out var result);
 
         // assert
         resultReturned.Should().BeTrue();
@@ -56,7 +57,7 @@ public class MultiSelectionTests
         {
             if (selectedOptions[i])
             {
-                result.ElementAt(resultIndex).Should().Be(options[i]);
+                result.ElementAt(resultIndex).Should().Be(selector.Options.Values[i].Value);
                 resultIndex++;
             }
         }

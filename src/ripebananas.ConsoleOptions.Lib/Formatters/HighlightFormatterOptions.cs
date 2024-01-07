@@ -8,8 +8,6 @@ namespace ripebananas.ConsoleOptions.Formatters
 
         public ConsoleColor SelectedBackgroundColor { get; set; } = ConsoleWrapper.Instance.ForegroundColor;
 
-        public Direction Direction { get; set; } = Direction.Vertical;
-
         public HighlightFormatterOptions()
         {
             CurrentIndicator = string.Empty;

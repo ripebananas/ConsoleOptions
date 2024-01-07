@@ -1,22 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ripebananas.ConsoleOptions.Formatters;
 
 namespace ripebananas.ConsoleOptions.Selectors
 {
     public class HorizontalSingleSelector<T> : SingleSelector<T>
     {
-        protected override bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out IEnumerable<T> result)
+        protected override bool OnKey(
+            ConsoleKey key,
+            IFormatter<T> formatter,
+            out IEnumerable<T> result)
         {
             result = Enumerable.Empty<T>();
 
             return key switch
             {
-                ConsoleKey.RightArrow => base.OnNext(options),
-                ConsoleKey.LeftArrow => base.OnPrevious(options),
+                ConsoleKey.RightArrow => base.OnNext(formatter),
+                ConsoleKey.LeftArrow => base.OnPrevious(formatter),
                 ConsoleKey.DownArrow => false,
                 ConsoleKey.UpArrow => false,
-                _ => base.OnKey(options, key, out result),
+                _ => base.OnKey(key, formatter, out result),
             };
         }
     }

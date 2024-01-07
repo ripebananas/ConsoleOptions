@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ripebananas.ConsoleOptions.Formatters;
 
 namespace ripebananas.ConsoleOptions.Selectors
 {
@@ -8,7 +9,10 @@ namespace ripebananas.ConsoleOptions.Selectors
     {
         public override bool IsSelected(int index) => false;
 
-        protected internal override bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out IEnumerable<T> result)
+        protected internal override bool OnKey(
+            ConsoleKey key,
+            IFormatter<T> formatter,
+            out IEnumerable<T> result)
         {
             result = Enumerable.Empty<T>();
 
@@ -16,15 +20,15 @@ namespace ripebananas.ConsoleOptions.Selectors
             {
                 case ConsoleKey.Enter:
                 case ConsoleKey.Spacebar:
-                    if (options.PrintOptions.CurrentIndex > -1)
+                    if (Options.CurrentIndex > -1)
                     {
                         ConsoleWrapper.Instance.CursorVisible = true;
-                        result = new[] { options.PrintOptions.Values[options.PrintOptions.CurrentIndex].Value };
+                        result = new[] { Options.Values[Options.CurrentIndex].Value };
                         return true;
                     }
                     return false;
                 default:
-                    return base.OnKey(options, key, out result);
+                    return base.OnKey(key, formatter, out result);
             }
         }
     }

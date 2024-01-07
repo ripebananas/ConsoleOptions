@@ -1,25 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using ripebananas.ConsoleOptions.Formatters;
 
 namespace ripebananas.ConsoleOptions
 {
-    public interface IConsoleOptionsBuilder<T, TFO>
+    public interface IConsoleOptionsBuilder<T, TFO> : IConfigurableConsoleOptionsBuilder<T, TFO>
         where TFO : FormatterOptions
     {
-        IConsoleOptionsBuilder<T, TFO> Prompt(string prompt);
+        IConsoleOptionsBuilder<T, TFONew> Formatter<TFONew>(
+            IFormatter<T, TFONew> formatter,
+            Action<TFONew>? configure = null)
+            where TFONew : FormatterOptions;
 
-        IConsoleOptionsBuilder<T, TFO> DefaultIndex(int index);
-
-        IConsoleOptionsBuilder<T, TFOOther> Formatter<TFOOther>(IFormatter<T, TFOOther> formatter)
-            where TFOOther : FormatterOptions;
-
-        IConsoleOptionsBuilder<T, TFOOther> Formatter<TF, TFOOther>()
-            where TFOOther : FormatterOptions
-            where TF : IFormatter<T, TFOOther>, new();
-
-        IConsoleOptionsBuilder<T, TFO> FormatterOptions(Action<TFO> configure);
-
-        IEnumerable<T> WaitForSelection();
+        IConsoleOptionsBuilder<T, TFONew> Formatter<TF, TFONew>(Action<TFONew>? configure = null)
+            where TFONew : FormatterOptions
+            where TF : IFormatter<T, TFONew>, new();
     }
 }

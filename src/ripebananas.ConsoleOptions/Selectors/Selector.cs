@@ -1,20 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ripebananas.ConsoleOptions.Formatters;
 
 namespace ripebananas.ConsoleOptions.Selectors
 {
     public abstract class Selector<T> : ISelector<T>
     {
+        protected readonly SelectorOptions<T> _options;
+
+        public SelectorOptions<T> Options => _options;
+
         protected Selector()
         {
+            _options = new SelectorOptions<T>();
         }
 
         public abstract bool IsSelected(int index);
 
-        public virtual IEnumerable<T> WaitForSelection(ConsoleOptions<T> options)
+        public virtual IEnumerable<T> WaitForSelection(IFormatter<T> formatter)
         {
-            options.Formatter.Print(options.PrintOptions);
+            formatter.Print(CreatePrintAllOptions());
 
             while (true)
             {
@@ -23,7 +29,7 @@ namespace ripebananas.ConsoleOptions.Selectors
                 switch (key.Key)
                 {
                     default:
-                        if (OnKey(options, key.Key, out var keyResult))
+                        if (OnKey(key.Key, formatter, out var keyResult))
                         {
                             return keyResult;
                         }
@@ -32,40 +38,51 @@ namespace ripebananas.ConsoleOptions.Selectors
             }
         }
 
-        protected internal virtual bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out IEnumerable<T> result)
+        protected internal virtual bool OnKey(
+            ConsoleKey key,
+            IFormatter<T> formatter,
+            out IEnumerable<T> result)
         {
             result = Enumerable.Empty<T>();
 
             return key switch
             {
-                ConsoleKey.UpArrow => OnPrevious(options),
-                ConsoleKey.DownArrow => OnNext(options),
+                ConsoleKey.UpArrow => OnPrevious(formatter),
+                ConsoleKey.DownArrow => OnNext(formatter),
                 _ => false,
             };
         }
 
-        protected virtual bool OnPrevious(ConsoleOptions<T> options)
+        protected virtual bool OnPrevious(IFormatter<T> formatter)
         {
-            options.PrintOptions.CurrentIndex--;
-            if (options.PrintOptions.CurrentIndex < 0)
+            _options.CurrentIndex--;
+            if (_options.CurrentIndex < 0)
             {
-                options.PrintOptions.CurrentIndex = options.PrintOptions.Values.Length - 1;
+                _options.CurrentIndex = _options.Values.Length - 1;
             }
-            options.Formatter.Print(options.PrintOptions);
+            formatter.Print(CreatePrintAllOptions());
 
             return false;
         }
 
-        protected virtual bool OnNext(ConsoleOptions<T> options)
+        protected virtual bool OnNext(IFormatter<T> formatter)
         {
-            options.PrintOptions.CurrentIndex++;
-            if (options.PrintOptions.CurrentIndex > options.PrintOptions.Values.Length - 1)
+            _options.CurrentIndex++;
+            if (_options.CurrentIndex > _options.Values.Length - 1)
             {
-                options.PrintOptions.CurrentIndex = 0;
+                _options.CurrentIndex = 0;
             }
-            options.Formatter.Print(options.PrintOptions);
+            formatter.Print(CreatePrintAllOptions());
 
             return false;
         }
+
+        protected virtual FormatterPrintOptions.All<T> CreatePrintAllOptions() =>
+            new FormatterPrintOptions.All<T>
+            {
+                CurrentIndex = _options.CurrentIndex,
+                SelectedIndices = _options.SelectedIndices.ToArray(),
+                Values = _options.Values,
+            };
     }
 }

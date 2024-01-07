@@ -4,7 +4,7 @@ namespace ripebananas.ConsoleOptions.Samples.Customization;
 
 internal class SampleColorFormatter : Formatter<Options, SampleColorFormatterOptions>
 {
-    protected override void PrintCurrentIndicator(PrintValueOptions<Options> options)
+    protected override void PrintCurrentIndicator(FormatterPrintOptions.Single<Options> options)
     {
         using (new DefaultColorizer())
         {
@@ -13,7 +13,7 @@ internal class SampleColorFormatter : Formatter<Options, SampleColorFormatterOpt
         }
     }
 
-    protected override void PrintSelectedIndicator(PrintValueOptions<Options> options)
+    protected override void PrintSelectedIndicator(FormatterPrintOptions.Single<Options> options)
     {
         using (new DefaultColorizer())
         {
@@ -22,7 +22,7 @@ internal class SampleColorFormatter : Formatter<Options, SampleColorFormatterOpt
         }
     }
 
-    protected override void PrintDescription(PrintValueOptions<Options> options)
+    protected override void PrintDescription(FormatterPrintOptions.Single<Options> options)
     {
         using (new DefaultColorizer())
         {

@@ -1,4 +1,8 @@
-﻿namespace ripebananas.ConsoleOptions.Formatters
+﻿using System.Collections.Generic;
+using System.Linq;
+using System;
+
+namespace ripebananas.ConsoleOptions.Formatters
 {
     public class DefaultSingleSelectorFormatter<T, TFO> : Formatter<T, TFO>
         where TFO : FormatterOptions, new()
@@ -13,6 +17,6 @@
         {
         }
 
-        protected override void PrintSelectedIndicator(PrintValueOptions<T> options) { }
+        protected override void PrintSelectedIndicator(FormatterPrintOptions.Single<T> options) { }
     }
 }
