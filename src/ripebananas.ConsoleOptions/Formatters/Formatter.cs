@@ -17,19 +17,19 @@ namespace ripebananas.ConsoleOptions.Formatters
 
         public Formatter(TFO options)
         {
-            ConsoleWrapper.Instance.CursorVisible = false;
+            Wrapper.Console.CursorVisible = false;
             _options = options;
-            _cursorLeft = ConsoleWrapper.Instance.CursorLeft;
-            _cursorTop = ConsoleWrapper.Instance.CursorTop;
+            _cursorLeft = Wrapper.Console.CursorLeft;
+            _cursorTop = Wrapper.Console.CursorTop;
         }
 
         public virtual void Print(FormatterPrintOptions.All<T> options)
         {
-            ConsoleWrapper.Instance.SetCursorPosition(_cursorLeft, _cursorTop);
+            Wrapper.Console.SetCursorPosition(_cursorLeft, _cursorTop);
 
             if (!string.IsNullOrWhiteSpace(Options.Prompt))
             {
-                ConsoleWrapper.Instance.WriteLine(Options.Prompt);
+                Wrapper.Console.WriteLine(Options.Prompt);
             }
 
             for (var i = 0; i < options.Values.Length; i++)
@@ -44,7 +44,7 @@ namespace ripebananas.ConsoleOptions.Formatters
 
             if (Options.Direction == Direction.Horizontal)
             {
-                ConsoleWrapper.Instance.WriteLine();
+                Wrapper.Console.WriteLine();
             }
         }
 
@@ -56,11 +56,11 @@ namespace ripebananas.ConsoleOptions.Formatters
 
             if (Options.Direction == Direction.Vertical)
             {
-                ConsoleWrapper.Instance.WriteLine();
+                Wrapper.Console.WriteLine();
             }
             else
             {
-                ConsoleWrapper.Instance.Write(" ");
+                Wrapper.Console.Write(" ");
             }
         }
 
@@ -69,7 +69,7 @@ namespace ripebananas.ConsoleOptions.Formatters
         /// </summary>
         /// <param name="options"></param>
         protected virtual void PrintCurrentIndicator(FormatterPrintOptions.Single<T> options) =>
-            ConsoleWrapper.Instance.Write(GetCurrentIndicator(options));
+            Wrapper.Console.Write(GetCurrentIndicator(options));
 
         /// <summary>
         /// Returns a string that denotes the line where the selection cursor is.
@@ -82,7 +82,7 @@ namespace ripebananas.ConsoleOptions.Formatters
         /// Used mainly with multi-selection.
         /// </summary>
         protected virtual void PrintSelectedIndicator(FormatterPrintOptions.Single<T> options) =>
-            ConsoleWrapper.Instance.Write(GetSelectedIndicator(options));
+            Wrapper.Console.Write(GetSelectedIndicator(options));
 
         /// <summary>
         /// Returns a string that denotes if an option is selected.
@@ -101,6 +101,6 @@ namespace ripebananas.ConsoleOptions.Formatters
         /// Prints a string that represents the text of the option.
         /// </summary>
         protected virtual void PrintDescription(FormatterPrintOptions.Single<T> options) =>
-            ConsoleWrapper.Instance.Write(options.Value.Description);
+            Wrapper.Console.Write(options.Value.Description);
     }
 }

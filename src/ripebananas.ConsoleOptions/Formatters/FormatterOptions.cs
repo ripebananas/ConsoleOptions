@@ -12,8 +12,8 @@
 
         public virtual string? Prompt { get; set; }
 
-        public virtual Direction Direction { get; set; } = Direction.Vertical;
+        public virtual Direction Direction { get; internal set; }
 
-        public virtual bool MultiSelection { get; set; }
+        public virtual bool MultiSelection { get; internal set; }
     }
 }

@@ -7,7 +7,7 @@ public static class Runner
 {
     public static void Run()
     {
-        ConsoleWrapper.Instance.OutputEncoding = System.Text.Encoding.UTF8;
+        Wrapper.Console.OutputEncoding = System.Text.Encoding.UTF8;
 
         HorizontalHighlightSingleSelection();
         Clear();
@@ -23,16 +23,12 @@ public static class Runner
         var values = OptionDescriptions.GetFromEnum<Options>().ToArray();
 
         var selected = ConsoleOptionsBuilder
-            .Selector<Options, SingleSelector<Options>>(values)
-            .Formatter<HighlightFormatter<Options>, HighlightFormatterOptions>(x =>
-            {
-                x.Direction = Direction.Horizontal;
-            })
-            .ConfigureSelector(x => x.Direction = Direction.Horizontal)
+            .SingleSelector<Options, SingleSelector<Options>>(values, Direction.Horizontal)
+            .Formatter<HighlightFormatter<Options>, HighlightFormatterOptions>()
             .Prompt("Horizontal single-selection:")
             .WaitForSelection();
 
-        ConsoleWrapper.Instance.WriteLine($"You selected {selected.Single()}");
+        Wrapper.Console.WriteLine($"You selected {selected.Single()}");
     }
 
     private static void HorizontalHighlightMultiSelection()
@@ -40,18 +36,12 @@ public static class Runner
         var values = OptionDescriptions.GetFromEnum<Options>().ToArray();
 
         var selected = ConsoleOptionsBuilder
-            .Selector<Options, MultiSelector<Options>>(values)
+            .MultiSelector<Options, MultiSelector<Options>>(values, Direction.Horizontal)
             .Formatter<HighlightFormatter<Options>, HighlightFormatterOptions>()
-            .ConfigureSelector(x => x.Direction = Direction.Horizontal)
-            .ConfigureFormatter(x =>
-            {
-                x.Direction = Direction.Horizontal;
-                x.Prompt = "Horizontal multi-selection:";
-                x.MultiSelection = true;
-            })
+            .ConfigureFormatter(x => x.Prompt = "Horizontal multi-selection:")
             .WaitForSelection();
 
-        ConsoleWrapper.Instance.WriteLine($"You selected {selected.BitwiseOr()}");
+        Wrapper.Console.WriteLine($"You selected {(selected.Any() ? selected.BitwiseOr().ToString() : "<none>")}");
     }
 
     private static void VerticalHighlightSingleSelection()
@@ -59,16 +49,12 @@ public static class Runner
         var values = OptionDescriptions.GetFromEnum<Options>().ToArray();
 
         var selected = ConsoleOptionsBuilder
-            .Selector<Options, SingleSelector<Options>>(values)
-            .Formatter<HighlightFormatter<Options>, HighlightFormatterOptions>(x =>
-            {
-                x.Direction = Direction.Vertical;
-            })
-            .ConfigureSelector(x => x.Direction = Direction.Vertical)
+            .SingleSelector<Options, SingleSelector<Options>>(values, Direction.Vertical)
+            .Formatter<HighlightFormatter<Options>, HighlightFormatterOptions>()
             .Prompt("Vertical single-selection:")
             .WaitForSelection();
 
-        ConsoleWrapper.Instance.WriteLine($"You selected {selected.Single()}");
+        Wrapper.Console.WriteLine($"You selected {selected.Single()}");
     }
 
     private static void VerticalHighlightMultiSelection()
@@ -76,24 +62,18 @@ public static class Runner
         var values = OptionDescriptions.GetFromEnum<Options>().ToArray();
 
         var selected = ConsoleOptionsBuilder
-            .Selector<Options, MultiSelector<Options>>(values)
+            .MultiSelector<Options, MultiSelector<Options>>(values, Direction.Vertical)
             .Formatter<HighlightFormatter<Options>, HighlightFormatterOptions>()
-            .ConfigureSelector(x => x.Direction = Direction.Vertical)
-            .ConfigureFormatter(x =>
-            {
-                x.Direction = Direction.Vertical;
-                x.Prompt = "Vertical multi-selection:";
-                x.MultiSelection = true;
-            })
+            .ConfigureFormatter(x => x.Prompt = "Vertical multi-selection:")
             .WaitForSelection();
 
-        ConsoleWrapper.Instance.WriteLine($"You selected {selected.BitwiseOr()}");
+        Wrapper.Console.WriteLine($"You selected {(selected.Any() ? selected.BitwiseOr().ToString() : "<none>")}");
     }
 
     private static void Clear()
     {
-        ConsoleWrapper.Instance.WriteLine("Press any key to continue");
-        ConsoleWrapper.Instance.ReadKey();
-        ConsoleWrapper.Instance.Clear();
+        Wrapper.Console.WriteLine("Press any key to continue");
+        Wrapper.Console.ReadKey();
+        Wrapper.Console.Clear();
     }
 }

@@ -22,7 +22,7 @@ namespace ripebananas.ConsoleOptions.Selectors
                 case ConsoleKey.Enter:
                     if (printAllOptions.CurrentIndex > -1)
                     {
-                        ConsoleWrapper.Instance.CursorVisible = true;
+                        Wrapper.Console.CursorVisible = true;
                         result = BuildResult(printAllOptions);
                         return true;
                     }

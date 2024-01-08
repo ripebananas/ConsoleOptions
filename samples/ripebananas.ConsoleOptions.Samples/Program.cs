@@ -11,7 +11,7 @@ var options = new OptionDescription<string>[]
 };
 
 var selected = ConsoleOptionsBuilder
-    .SingleSelector(options)
+    .SingleSelector(options, Direction.Vertical)
     .Prompt("Select which samples to run:")
     .WaitForSelection()
     .Single();

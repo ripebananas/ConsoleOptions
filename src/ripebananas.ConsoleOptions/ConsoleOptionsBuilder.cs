@@ -7,72 +7,103 @@ namespace ripebananas.ConsoleOptions
 {
     public class ConsoleOptionsBuilder
     {
-        //public static IConsoleOptionsBuilder<T, FormatterOptions> SingleVerticalSelector<T>(OptionDescription<T>[] values) =>
-        //    new ConsoleOptionsBuilder<T, SingleSelector<T>, FormatterOptions>(
-        //        values,
-        //        new Formatter<T, FormatterOptions>());
+        public static IConsoleOptionsBuilder<T, FormatterOptions> SingleSelector<T>(
+            OptionDescription<T>[] values,
+            Direction direction) =>
+            Selector<T, SingleSelector<T>>(new SingleSelector<T>(), values, direction, false);
 
-        //public static IConsoleOptionsBuilder<T, FormatterOptions> MultiVarticalSelector<T>(OptionDescription<T>[] values) =>
-        //    new ConsoleOptionsBuilder<T, MultiSelector<T>, FormatterOptions>(
-        //        values,
-        //        new Formatter<T, FormatterOptions>());
-
-        //public static IConsoleOptionsBuilder<T, FormatterOptions> SingleHorizontalSelector<T>(OptionDescription<T>[] values) =>
-        //    new ConsoleOptionsBuilder<T, SingleSelector<T>, FormatterOptions>(
-        //        values,
-        //        new Formatter<T, FormatterOptions>());
-
-        //public static IConsoleOptionsBuilder<T, FormatterOptions> MultiHorizontalSelector<T>(OptionDescription<T>[] values) =>
-        //    new ConsoleOptionsBuilder<T, MultiSelector<T>, FormatterOptions>(
-        //        values,
-        //        new Formatter<T, FormatterOptions>());
-
-
-
-        public static IConsoleOptionsBuilder<T, FormatterOptions> SingleSelector<T>(OptionDescription<T>[] values) =>
-            new ConsoleOptionsBuilder<T, SingleSelector<T>, FormatterOptions>(
-                values,
-                new Formatter<T, FormatterOptions>());
-
-        public static IConsoleOptionsBuilder<T, FormatterOptions> MultiSelector<T>(OptionDescription<T>[] values) =>
-            new ConsoleOptionsBuilder<T, MultiSelector<T>, FormatterOptions>(
-                values,
-                new Formatter<T, FormatterOptions>());
-
-        public static IConsoleOptionsBuilder<T, FormatterOptions> Selector<T, TS>(OptionDescription<T>[] values)
+        public static IConsoleOptionsBuilder<T, FormatterOptions> SingleSelector<T, TS>(
+            OptionDescription<T>[] values,
+            Direction direction)
             where TS : ISelector<T>, new() =>
-            new ConsoleOptionsBuilder<T, TS, FormatterOptions>(
-                values,
-                new Formatter<T, FormatterOptions>());
+            Selector<T, TS>(values, direction, false);
+
+        public static IConsoleOptionsBuilder<T, FormatterOptions> SingleSelector<T, TS>(
+            TS selector,
+            OptionDescription<T>[] values,
+            Direction direction)
+            where TS : ISelector<T> =>
+            Selector<T, TS>(selector, values, direction, false);
+
+        public static IConsoleOptionsBuilder<T, FormatterOptions> MultiSelector<T>(
+            OptionDescription<T>[] values,
+            Direction direction) =>
+            Selector<T, MultiSelector<T>>(new MultiSelector<T>(), values, direction, true);
+
+        public static IConsoleOptionsBuilder<T, FormatterOptions> MultiSelector<T, TS>(
+            OptionDescription<T>[] values,
+            Direction direction)
+            where TS : ISelector<T>, new() =>
+            Selector<T, TS>(new TS(), values, direction, true);
+
+        public static IConsoleOptionsBuilder<T, FormatterOptions> MultiSelector<T, TS>(
+            TS selector,
+            OptionDescription<T>[] values,
+            Direction direction)
+            where TS : ISelector<T> =>
+            Selector<T, TS>(selector, values, direction, true);
+
+        private static IConsoleOptionsBuilder<T, FormatterOptions> Selector<T, TS>(
+            OptionDescription<T>[] values,
+            Direction direction,
+            bool multi)
+            where TS : ISelector<T>, new() =>
+            Selector<T, TS>(new TS(), values, direction, multi);
+
+        private static IConsoleOptionsBuilder<T, FormatterOptions> Selector<T, TS>(
+            ISelector<T> selector,
+            OptionDescription<T>[] values,
+            Direction direction,
+            bool multi)
+        {
+            selector.Options.Values = values;
+            selector.Options.Direction = direction;
+
+            var formatter = new Formatter<T, FormatterOptions>();
+            formatter.Options.Direction = direction;
+            formatter.Options.MultiSelection = multi;
+
+            return new ConsoleOptionsBuilder<T, TS, FormatterOptions>(selector, formatter);
+        }
     }
 
     internal class ConsoleOptionsBuilder<T, TS, TFO> : IConsoleOptionsBuilder<T, TFO>, IConfigurableConsoleOptionsBuilder<T, TFO>
-        where TS : ISelector<T>, new()
         where TFO : FormatterOptions
     {
         private readonly ISelector<T> _selector;
         private readonly IFormatter<T, TFO> _formatter;
 
-        internal ConsoleOptionsBuilder(OptionDescription<T>[] values, IFormatter<T, TFO> formatter)
+        internal ConsoleOptionsBuilder(ISelector<T> selector, IFormatter<T, TFO> formatter)
         {
-            _selector = new TS();
-            _selector.Options.Values = values;
+            _selector = selector;
             _formatter = formatter;
         }
 
-        public IConsoleOptionsBuilder<T, TFONew> Formatter<TFONew>(
-            IFormatter<T, TFONew> formatter,
-            Action<TFONew>? configure = null)
-            where TFONew : FormatterOptions
+        public IConsoleOptionsBuilder<T, TFO> Formatter<TF>(Action<TFO>? configure = null)
+            where TF : IFormatter<T, TFO>, new() =>
+            Formatter(new TF(), configure);
+
+        public IConsoleOptionsBuilder<T, TFO> Formatter(IFormatter<T, TFO> formatter, Action<TFO>? configure = null)
         {
+            formatter.Options.Direction = _formatter.Options.Direction;
+            formatter.Options.MultiSelection = _formatter.Options.MultiSelection;
             configure?.Invoke(formatter.Options);
-            return new ConsoleOptionsBuilder<T, TS, TFONew>(_selector.Options.Values, formatter);
+            return new ConsoleOptionsBuilder<T, TS, TFO>(_selector, formatter);
         }
 
         public IConsoleOptionsBuilder<T, TFONew> Formatter<TF, TFONew>(Action<TFONew>? configure = null)
             where TF : IFormatter<T, TFONew>, new()
             where TFONew : FormatterOptions =>
             Formatter(new TF(), configure);
+
+        public IConsoleOptionsBuilder<T, TFONew> Formatter<TFONew>(IFormatter<T, TFONew> formatter, Action<TFONew>? configure = null)
+            where TFONew : FormatterOptions
+        {
+            formatter.Options.Direction = _formatter.Options.Direction;
+            formatter.Options.MultiSelection = _formatter.Options.MultiSelection;
+            configure?.Invoke(formatter.Options);
+            return new ConsoleOptionsBuilder<T, TS, TFONew>(_selector, formatter);
+        }
 
         public IConfigurableConsoleOptionsBuilder<T, TFO> ConfigureSelector(Action<SelectorOptions<T>> configure)
         {

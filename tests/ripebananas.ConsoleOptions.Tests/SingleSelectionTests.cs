@@ -5,6 +5,11 @@ namespace ripebananas.ConsoleOptions.Tests;
 
 public class SingleSelectionTests
 {
+    public SingleSelectionTests()
+    {
+        Wrapper.Console = new Mock<IConsole>().Object;
+    }
+
     [Theory]
     [InlineData(ConsoleKey.Enter)]
     [InlineData(ConsoleKey.Spacebar)]

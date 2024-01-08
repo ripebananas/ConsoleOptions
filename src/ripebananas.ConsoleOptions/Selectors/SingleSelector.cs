@@ -22,7 +22,7 @@ namespace ripebananas.ConsoleOptions.Selectors
                 case ConsoleKey.Spacebar:
                     if (Options.CurrentIndex > -1)
                     {
-                        ConsoleWrapper.Instance.CursorVisible = true;
+                        Wrapper.Console.CursorVisible = true;
                         result = new[] { Options.Values[Options.CurrentIndex].Value };
                         return true;
                     }

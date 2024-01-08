@@ -6,13 +6,13 @@ public static class Runner
 {
     public static void Run()
     {
-        ConsoleWrapper.Instance.OutputEncoding = System.Text.Encoding.UTF8;
+        Wrapper.Console.OutputEncoding = System.Text.Encoding.UTF8;
 
         Colorization();
 
-        ConsoleWrapper.Instance.WriteLine("Press any key to continue");
-        ConsoleWrapper.Instance.ReadKey();
-        ConsoleWrapper.Instance.Clear();
+        Wrapper.Console.WriteLine("Press any key to continue");
+        Wrapper.Console.ReadKey();
+        Wrapper.Console.Clear();
 
         HorizontalSelection();
     }
@@ -20,7 +20,7 @@ public static class Runner
     private static void Colorization()
     {
         var selected = ConsoleOptionsBuilder
-            .MultiSelector(OptionDescriptions.GetFromEnum<Options>().ToArray())
+            .MultiSelector(OptionDescriptions.GetFromEnum<Options>().ToArray(), Direction.Vertical)
             .Formatter<ColorFormatter, ColorFormatterOptions>(x =>
             {
                 x.CurrentIndicator = "→";
@@ -34,14 +34,14 @@ public static class Runner
             .Prompt("Select an option with up/down arrows, Spacebar to mark an option, Enter to submit:")
             .WaitForSelection();
 
-        ConsoleWrapper.Instance.WriteLine($"You selected {selected.BitwiseOr()}");
+        Wrapper.Console.WriteLine($"You selected {(selected.Any() ? selected.BitwiseOr().ToString() : "<none>")}");
     }
 
 
     private static void HorizontalSelection()
     {
         var selected = ConsoleOptionsBuilder
-            .Selector<Options, HorizontalMultiSelector>(OptionDescriptions.GetFromEnum<Options>().ToArray())
+            .MultiSelector(OptionDescriptions.GetFromEnum<Options>().ToArray(), Direction.Horizontal)
             .Formatter<HorizontalFormatter, FormatterOptions>(x =>
             {
                 x.CurrentIndicator = "→";
@@ -50,6 +50,6 @@ public static class Runner
             .Prompt("Select an option with left/right arrows, Spacebar to mark an option, Enter to submit:")
             .WaitForSelection();
 
-        ConsoleWrapper.Instance.WriteLine($"You selected {selected.BitwiseOr()}");
+        Wrapper.Console.WriteLine($"You selected {(selected.Any() ? selected.BitwiseOr().ToString() : "<none>")}");
     }
 }

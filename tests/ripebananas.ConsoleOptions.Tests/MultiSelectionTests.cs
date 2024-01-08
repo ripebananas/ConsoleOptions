@@ -5,6 +5,11 @@ namespace ripebananas.ConsoleOptions.Tests;
 
 public class MultiSelectionTests
 {
+    public MultiSelectionTests()
+    {
+        Wrapper.Console = new Mock<IConsole>().Object;
+    }
+
     [Fact]
     public void DownOrUpArrowKeysPressedRandomly_SelectedOptionsShouldBeReturnedCorrectly()
     {

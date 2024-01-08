@@ -24,7 +24,7 @@ namespace ripebananas.ConsoleOptions.Selectors
 
             while (true)
             {
-                var key = ConsoleWrapper.Instance.ReadKey(true);
+                var key = Wrapper.Console.ReadKey(true);
 
                 switch (key.Key)
                 {

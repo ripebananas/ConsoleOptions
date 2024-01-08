@@ -8,8 +8,8 @@
             {
                 if (options.IsCurrent)
                 {
-                    ConsoleWrapper.Instance.ForegroundColor = Options.SelectedForegroundColor;
-                    ConsoleWrapper.Instance.BackgroundColor = Options.SelectedBackgroundColor;
+                    Wrapper.Console.ForegroundColor = Options.SelectedForegroundColor;
+                    Wrapper.Console.BackgroundColor = Options.SelectedBackgroundColor;
                 }
                 base.PrintDescription(options);
             }

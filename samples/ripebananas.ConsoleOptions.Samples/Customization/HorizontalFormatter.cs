@@ -9,6 +9,6 @@ internal class HorizontalFormatter : Formatter<Options, FormatterOptions>
         PrintCurrentIndicator(options);
         PrintSelectedIndicator(options);
         PrintDescription(options);
-        ConsoleWrapper.Instance.Write(" ");
+        Wrapper.Console.Write(" ");
     }
 }
