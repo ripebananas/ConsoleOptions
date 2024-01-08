@@ -20,10 +20,8 @@ public static class Runner
 
     private static void HorizontalHighlightSingleSelection()
     {
-        var values = OptionDescriptions.GetFromEnum<Options>().ToArray();
-
         var selected = ConsoleOptionsBuilder
-            .SingleSelector<Options, SingleSelector<Options>>(values, Direction.Horizontal)
+            .SingleSelector<Options, SingleSelector<Options>>(Direction.Horizontal)
             .Formatter<HighlightFormatter<Options>, HighlightFormatterOptions>()
             .Prompt("Horizontal single-selection:")
             .WaitForSelection();
@@ -33,10 +31,8 @@ public static class Runner
 
     private static void HorizontalHighlightMultiSelection()
     {
-        var values = OptionDescriptions.GetFromEnum<Options>().ToArray();
-
         var selected = ConsoleOptionsBuilder
-            .MultiSelector<Options, MultiSelector<Options>>(values, Direction.Horizontal)
+            .MultiSelector<Options, MultiSelector<Options>>(Direction.Horizontal)
             .Formatter<HighlightFormatter<Options>, HighlightFormatterOptions>()
             .ConfigureFormatter(x => x.Prompt = "Horizontal multi-selection:")
             .WaitForSelection();
@@ -46,10 +42,8 @@ public static class Runner
 
     private static void VerticalHighlightSingleSelection()
     {
-        var values = OptionDescriptions.GetFromEnum<Options>().ToArray();
-
         var selected = ConsoleOptionsBuilder
-            .SingleSelector<Options, SingleSelector<Options>>(values, Direction.Vertical)
+            .SingleSelector<Options, SingleSelector<Options>>(Direction.Vertical)
             .Formatter<HighlightFormatter<Options>, HighlightFormatterOptions>()
             .Prompt("Vertical single-selection:")
             .WaitForSelection();
@@ -59,10 +53,8 @@ public static class Runner
 
     private static void VerticalHighlightMultiSelection()
     {
-        var values = OptionDescriptions.GetFromEnum<Options>().ToArray();
-
         var selected = ConsoleOptionsBuilder
-            .MultiSelector<Options, MultiSelector<Options>>(values, Direction.Vertical)
+            .MultiSelector<Options, MultiSelector<Options>>(Direction.Vertical)
             .Formatter<HighlightFormatter<Options>, HighlightFormatterOptions>()
             .ConfigureFormatter(x => x.Prompt = "Vertical multi-selection:")
             .WaitForSelection();

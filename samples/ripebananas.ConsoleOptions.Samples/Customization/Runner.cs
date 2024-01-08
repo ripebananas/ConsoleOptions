@@ -8,19 +8,19 @@ public static class Runner
     {
         Wrapper.Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-        Colorization();
+        Customization1();
 
         Wrapper.Console.WriteLine("Press any key to continue");
         Wrapper.Console.ReadKey();
         Wrapper.Console.Clear();
 
-        HorizontalSelection();
+        Customization2();
     }
 
-    private static void Colorization()
+    private static void Customization1()
     {
         var selected = ConsoleOptionsBuilder
-            .MultiSelector(OptionDescriptions.GetFromEnum<Options>().ToArray(), Direction.Vertical)
+            .MultiSelector<Options>(Direction.Vertical)
             .Formatter<ColorFormatter, ColorFormatterOptions>(x =>
             {
                 x.CurrentIndicator = "→";
@@ -38,13 +38,13 @@ public static class Runner
     }
 
 
-    private static void HorizontalSelection()
+    private static void Customization2()
     {
         var selected = ConsoleOptionsBuilder
-            .MultiSelector(OptionDescriptions.GetFromEnum<Options>().ToArray(), Direction.Horizontal)
-            .Formatter<HorizontalFormatter, FormatterOptions>(x =>
+            .MultiSelector<Options>(Direction.Horizontal)
+            .ConfigureFormatter(x =>
             {
-                x.CurrentIndicator = "→";
+                x.CurrentIndicator = "→".BlackForeground().DarkGreenBackground();
                 x.SelectedIndicator = "[X]";
             })
             .Prompt("Select an option with left/right arrows, Spacebar to mark an option, Enter to submit:")

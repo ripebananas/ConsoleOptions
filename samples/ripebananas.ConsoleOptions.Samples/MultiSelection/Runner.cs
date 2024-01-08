@@ -7,7 +7,7 @@ public static class Runner
         Wrapper.Console.OutputEncoding = System.Text.Encoding.UTF8;
 
         var selected = ConsoleOptionsBuilder
-            .MultiSelector(OptionDescriptions.GetFromEnum<Options>().ToArray(), Direction.Vertical)
+            .MultiSelector<Options>(Direction.Vertical)
             .Prompt("Select an option with up/down arrows, Spacebar to mark an option, Enter to submit:")
             .WaitForSelection();
 

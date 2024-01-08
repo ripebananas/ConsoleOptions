@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ripebananas.ConsoleOptions.Formatters;
 using ripebananas.ConsoleOptions.Selectors;
 
@@ -7,6 +8,20 @@ namespace ripebananas.ConsoleOptions
 {
     public class ConsoleOptionsBuilder
     {
+        public static IConsoleOptionsBuilder<T, FormatterOptions> SingleSelector<T>(Direction direction)
+            where T : struct, Enum =>
+            SingleSelector<T>(OptionDescriptions.GetFromEnum<T>().ToArray(), direction);
+
+        public static IConsoleOptionsBuilder<T, FormatterOptions> SingleSelector<T, TS>(Direction direction)
+            where T : struct, Enum
+            where TS : ISelector<T>, new() =>
+            SingleSelector(OptionDescriptions.GetFromEnum<T>().ToArray(), direction);
+
+        public static IConsoleOptionsBuilder<T, FormatterOptions> SingleSelector<T, TS>(TS selector, Direction direction)
+            where T : struct, Enum
+            where TS : ISelector<T> =>
+            SingleSelector(selector, OptionDescriptions.GetFromEnum<T>().ToArray(), direction);
+
         public static IConsoleOptionsBuilder<T, FormatterOptions> SingleSelector<T>(
             OptionDescription<T>[] values,
             Direction direction) =>
@@ -24,6 +39,20 @@ namespace ripebananas.ConsoleOptions
             Direction direction)
             where TS : ISelector<T> =>
             Selector<T, TS>(selector, values, direction, false);
+
+        public static IConsoleOptionsBuilder<T, FormatterOptions> MultiSelector<T>(Direction direction)
+            where T : struct, Enum =>
+            MultiSelector(new MultiSelector<T>(), OptionDescriptions.GetFromEnum<T>().ToArray(), direction);
+
+        public static IConsoleOptionsBuilder<T, FormatterOptions> MultiSelector<T, TS>(Direction direction)
+            where T : struct, Enum
+            where TS : ISelector<T>, new() =>
+            MultiSelector(new TS(), OptionDescriptions.GetFromEnum<T>().ToArray(), direction);
+
+        public static IConsoleOptionsBuilder<T, FormatterOptions> MultiSelector<T, TS>(TS selector, Direction direction)
+            where T : struct, Enum
+            where TS : ISelector<T> =>
+            MultiSelector(selector, OptionDescriptions.GetFromEnum<T>().ToArray(), direction);
 
         public static IConsoleOptionsBuilder<T, FormatterOptions> MultiSelector<T>(
             OptionDescription<T>[] values,
