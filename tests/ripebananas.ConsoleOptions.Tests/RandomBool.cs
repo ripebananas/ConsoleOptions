@@ -1,8 +1,6 @@
 ﻿namespace ripebananas.ConsoleOptions.Tests;
 
-internal class RandomBool
+internal static class RandomBool
 {
-    private readonly Random _random = new();
-
-    public bool Next() => _random.Next(2) == 2;
+    public static bool Next() => Random.Shared.Next(2) == 2;
 }

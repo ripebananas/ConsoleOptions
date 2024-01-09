@@ -9,14 +9,14 @@ namespace ripebananas.ConsoleOptions
 
         public DefaultColorizer()
         {
-            _foregroundColor = Console.ForegroundColor;
-            _backgroundColor = Console.BackgroundColor;
+            _foregroundColor = Wrapper.Console.ForegroundColor;
+            _backgroundColor = Wrapper.Console.BackgroundColor;
         }
 
         public void Dispose()
         {
-            Console.ForegroundColor = _foregroundColor;
-            Console.BackgroundColor = _backgroundColor;
+            Wrapper.Console.ForegroundColor = _foregroundColor;
+            Wrapper.Console.BackgroundColor = _backgroundColor;
         }
     }
 }

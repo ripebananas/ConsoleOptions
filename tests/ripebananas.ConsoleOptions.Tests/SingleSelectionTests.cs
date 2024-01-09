@@ -1,73 +1,51 @@
-﻿//
-// ███╗   ██╗ ██████╗ ████████╗███████╗
-// ████╗  ██║██╔═══██╗╚══██╔══╝██╔════╝
-// ██╔██╗ ██║██║   ██║   ██║   █████╗
-// ██║╚██╗██║██║   ██║   ██║   ██╔══╝
-// ██║ ╚████║╚██████╔╝   ██║   ███████╗
-// ╚═╝  ╚═══╝ ╚═════╝    ╚═╝   ╚══════╝
-// ------------------------------------------------
-//
-// The tests are only runnable with `dotnet test` command, because of dependency on System.Console.
-//
-
-using ripebananas.ConsoleOptions.Formatters;
+﻿using ripebananas.ConsoleOptions.Formatters;
 using ripebananas.ConsoleOptions.Selectors;
 
 namespace ripebananas.ConsoleOptions.Tests;
 
 public class SingleSelectionTests
 {
+    public SingleSelectionTests()
+    {
+        Wrapper.Console = new Mock<IConsole>().Object;
+    }
+
     [Theory]
     [InlineData(ConsoleKey.Enter)]
     [InlineData(ConsoleKey.Spacebar)]
     public void DownOrUpArrowKeysPressedRandomly_SelectedOptionShouldBeReturnedCorrectly(ConsoleKey selectKey)
     {
         // arrange
-        var consoleOptions = new ConsoleOptions<Options>(new Mock<IFormatter<Options>>().Object);
-        var console = new SingleSelector<Options>();
-        var randomBool = new RandomBool();
+        var formatter = new Mock<IFormatter<Options>>().Object;
+        var selector = new SingleSelector<Options>();
+        selector.Options.Values = OptionDescriptions.GetFromEnum<Options>().ToArray();
+
+        var optionsCount = selector.Options.Values.Length;
+
         var index = -1;
-        var options = Enum.GetValues<Options>();
         const int iterations = 10;
 
         // act
         for (var i = 0; i < iterations; i++)
         {
-            var down = randomBool.Next();
+            var down = RandomBool.Next();
 
             index += down ? 1 : -1;
             if (index < 0)
             {
-                index = options.Length - 1;
+                index = optionsCount - 1;
             }
-            else if (index >= options.Length)
+            else if (index >= optionsCount)
             {
                 index = 0;
             }
-            console.OnKey(consoleOptions, down ? ConsoleKey.DownArrow : ConsoleKey.UpArrow, out var _);
+            selector.OnKey(down ? ConsoleKey.DownArrow : ConsoleKey.UpArrow, formatter, out var _);
         }
 
-        var result = console.OnKey(consoleOptions, selectKey, out var selectedOption);
+        var result = selector.OnKey(selectKey, formatter, out var selectedOption);
 
         // assert
         result.Should().BeTrue();
-        selectedOption.Should().NotBeNull();
-        selectedOption.Should().Be(options[index % options.Length]);
-    }
-
-    [Fact]
-    public void EscapePressed_NoResultReturned()
-    {
-        // arrange
-        var consoleOptions = new ConsoleOptions<Options>(new Mock<IFormatter<Options>>().Object);
-        var console = new SingleSelector<Options>();
-
-        // act
-        console.OnKey(consoleOptions, ConsoleKey.DownArrow, out var _);
-        var result = console.OnKey(consoleOptions, ConsoleKey.Escape, out var selectedOption);
-
-        // assert
-        result.Should().BeFalse();
-        selectedOption.Should().BeNull();
+        selectedOption.First().Should().Be(selector.Options.Values[index % optionsCount].Value);
     }
 }

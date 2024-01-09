@@ -1,84 +1,106 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Linq;
 
 namespace ripebananas.ConsoleOptions.Formatters
 {
-    public abstract class Formatter<T, TFO> : IFormatter<T, TFO>
-        where T : struct, Enum
+    public class Formatter<T, TFO> : IFormatter<T, TFO>
         where TFO : FormatterOptions, new()
     {
-        protected readonly TFO _formatterOptions;
+        protected readonly TFO _options;
+        protected readonly int _cursorLeft, _cursorTop;
 
-        public TFO Options => _formatterOptions;
+        public TFO Options => _options;
 
         public Formatter()
             : this(new TFO())
         {
         }
 
-        public Formatter(TFO formatterOptions)
+        public Formatter(TFO options)
         {
-            _formatterOptions = formatterOptions;
+            Wrapper.Console.CursorVisible = false;
+            _options = options;
+            _cursorLeft = Wrapper.Console.CursorLeft;
+            _cursorTop = Wrapper.Console.CursorTop;
         }
 
-        public virtual void Print(PrintValueOptions<T> options)
+        public virtual void Print(FormatterPrintOptions.All<T> options)
+        {
+            Wrapper.Console.SetCursorPosition(_cursorLeft, _cursorTop);
+
+            if (!string.IsNullOrWhiteSpace(Options.Prompt))
+            {
+                Wrapper.Console.WriteLine(Options.Prompt);
+            }
+
+            for (var i = 0; i < options.Values.Length; i++)
+            {
+                Print(new FormatterPrintOptions.Single<T>(options.Values[i])
+                {
+                    Index = i,
+                    IsCurrent = i == options.CurrentIndex,
+                    IsSelected = options.SelectedIndices.Contains(i)
+                });
+            }
+
+            if (Options.Direction == Direction.Horizontal)
+            {
+                Wrapper.Console.WriteLine();
+            }
+        }
+
+        public virtual void Print(FormatterPrintOptions.Single<T> options)
         {
             PrintCurrentIndicator(options);
             PrintSelectedIndicator(options);
             PrintDescription(options);
-            Console.WriteLine();
+
+            if (Options.Direction == Direction.Vertical)
+            {
+                Wrapper.Console.WriteLine();
+            }
+            else
+            {
+                Wrapper.Console.Write(" ");
+            }
         }
 
         /// <summary>
         /// Prints a string that denotes the line where the selection cursor is.
         /// </summary>
         /// <param name="options"></param>
-        protected virtual void PrintCurrentIndicator(PrintValueOptions<T> options) =>
-            Console.Write(GetCurrentIndicator(options));
+        protected virtual void PrintCurrentIndicator(FormatterPrintOptions.Single<T> options) =>
+            Wrapper.Console.Write(GetCurrentIndicator(options));
 
         /// <summary>
         /// Returns a string that denotes the line where the selection cursor is.
         /// </summary>
-        /// <param name="options"></param>
-        protected virtual string? GetCurrentIndicator(PrintValueOptions<T> options) =>
-            options.IsCurrent ? _formatterOptions.CurrentIndicator : _formatterOptions.NotCurrentIndicator;
+        protected virtual string? GetCurrentIndicator(FormatterPrintOptions.Single<T> options) =>
+            options.IsCurrent ? Options.CurrentIndicator : Options.NotCurrentIndicator;
 
         /// <summary>
         /// Prints a string that denotes if an option is selected.
         /// Used mainly with multi-selection.
         /// </summary>
-        /// <param name="options"></param>
-        protected virtual void PrintSelectedIndicator(PrintValueOptions<T> options) =>
-            Console.Write(GetSelectedIndicator(options));
+        protected virtual void PrintSelectedIndicator(FormatterPrintOptions.Single<T> options) =>
+            Wrapper.Console.Write(GetSelectedIndicator(options));
 
         /// <summary>
         /// Returns a string that denotes if an option is selected.
         /// Used mainly with multi-selection.
         /// </summary>
-        /// <param name="options"></param>
-        protected virtual string? GetSelectedIndicator(PrintValueOptions<T> options) =>
-            options.IsSelected ? _formatterOptions.SelectedIndicator : _formatterOptions.NotSelectedIndicator;
+        protected virtual string? GetSelectedIndicator(FormatterPrintOptions.Single<T> options)
+        {
+            if (!Options.MultiSelection)
+            {
+                return string.Empty;
+            }
+            return options.IsSelected ? Options.SelectedIndicator : Options.NotSelectedIndicator;
+        }
 
         /// <summary>
         /// Prints a string that represents the text of the option.
         /// </summary>
-        /// <param name="options"></param>
-        protected virtual void PrintDescription(PrintValueOptions<T> options) =>
-            Console.Write(GetDescription(options));
-
-        /// <summary>
-        /// Returns a string that represents the text of the option.
-        /// </summary>
-        /// <param name="options"></param>
-        protected virtual string? GetDescription(PrintValueOptions<T> options)
-        {
-            var name = options.Value.ToString();
-
-            var attr = typeof(T)
-                .GetField(name)?
-                .GetCustomAttribute<OptionDescriptionAttribute>();
-
-            return attr?.Description ?? name;
-        }
+        protected virtual void PrintDescription(FormatterPrintOptions.Single<T> options) =>
+            Wrapper.Console.Write(options.Value.Description);
     }
 }

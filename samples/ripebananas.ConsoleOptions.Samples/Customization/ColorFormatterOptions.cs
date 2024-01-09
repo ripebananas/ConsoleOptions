@@ -2,7 +2,7 @@
 
 namespace ripebananas.ConsoleOptions.Samples.Customization;
 
-internal class SampleColorFormatterOptions : FormatterOptions
+internal class ColorFormatterOptions : FormatterOptions
 {
     public ConsoleColor CurrentIndicatorForegroundColor { get; set; } = ConsoleColor.Gray;
 

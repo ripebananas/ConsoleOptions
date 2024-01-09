@@ -1,73 +1,55 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using ripebananas.ConsoleOptions.Formatters;
 
 namespace ripebananas.ConsoleOptions.Selectors
 {
     public class MultiSelector<T> : Selector<T>
-        where T : struct, Enum
     {
-        private readonly bool[] _optionsSelected;
+        public override bool IsSelected(int index) => Options.SelectedIndices.Contains(index);
 
-        public MultiSelector()
+        protected internal override bool OnKey(
+            ConsoleKey key,
+            IFormatter<T> formatter,
+            out IEnumerable<T> result)
         {
-            _optionsSelected = new bool[Enum.GetValues(typeof(T)).Length];
-        }
-
-        public override bool IsSelected(int index) => _optionsSelected[index];
-
-        protected internal override bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out T? result)
-        {
-            result = null;
+            result = Enumerable.Empty<T>();
+            var printAllOptions = CreatePrintAllOptions();
 
             switch (key)
             {
                 case ConsoleKey.Enter:
-                    if (options.CurrentIndex > -1)
+                    if (printAllOptions.CurrentIndex > -1)
                     {
-                        Console.CursorVisible = true;
-                        result = BuildResult(options);
+                        Wrapper.Console.CursorVisible = true;
+                        result = BuildResult(printAllOptions);
                         return true;
                     }
                     return false;
                 case ConsoleKey.Spacebar:
-                    if (options.CurrentIndex > -1)
+                    if (printAllOptions.CurrentIndex > -1)
                     {
-                        _optionsSelected[options.CurrentIndex] = !_optionsSelected[options.CurrentIndex];
-                        Print(options);
+                        if (Options.SelectedIndices.Contains(printAllOptions.CurrentIndex))
+                        {
+                            Options.SelectedIndices.Remove(printAllOptions.CurrentIndex);
+                        }
+                        else
+                        {
+                            Options.SelectedIndices.Add(printAllOptions.CurrentIndex);
+                        }
+                        printAllOptions.SelectedIndices = Options.SelectedIndices.ToArray();
+                        formatter.Print(printAllOptions);
                     }
                     return false;
                 default:
-                    return base.OnKey(options, key, out result);
+                    return base.OnKey(key, formatter, out result);
             }
         }
 
-        private T? BuildResult(ConsoleOptions<T> options)
+        private IEnumerable<T> BuildResult(FormatterPrintOptions.All<T> options)
         {
-            if (Array.TrueForAll(_optionsSelected, x => !x))
-            {
-                return null;
-            }
-
-            T? result = null;
-
-            for (var i = 0; i < _optionsSelected.Length; i++)
-            {
-                if (!_optionsSelected[i])
-                {
-                    continue;
-                }
-
-                if (result == null)
-                {
-                    result = options.Values[i];
-                }
-                else
-                {
-                    // no bitwise OR for generic enums, hence the casts
-                    result = (T)(object)((int)(object)result | (int)(object)options.Values[i]);
-                }
-            }
-
-            return result;
+            return Options.SelectedIndices.Select(x => options.Values[x].Value);
         }
     }
 }

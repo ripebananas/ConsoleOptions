@@ -1,29 +1,34 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using ripebananas.ConsoleOptions.Formatters;
 
 namespace ripebananas.ConsoleOptions.Selectors
 {
     public class SingleSelector<T> : Selector<T>
-        where T : struct, Enum
     {
         public override bool IsSelected(int index) => false;
 
-        protected internal override bool OnKey(ConsoleOptions<T> options, ConsoleKey key, out T? result)
+        protected internal override bool OnKey(
+            ConsoleKey key,
+            IFormatter<T> formatter,
+            out IEnumerable<T> result)
         {
-            result = null;
+            result = Enumerable.Empty<T>();
 
             switch (key)
             {
                 case ConsoleKey.Enter:
                 case ConsoleKey.Spacebar:
-                    if (options.CurrentIndex > -1)
+                    if (Options.CurrentIndex > -1)
                     {
-                        Console.CursorVisible = true;
-                        result = options.Values[options.CurrentIndex];
+                        Wrapper.Console.CursorVisible = true;
+                        result = new[] { Options.Values[Options.CurrentIndex].Value };
                         return true;
                     }
                     return false;
                 default:
-                    return base.OnKey(options, key, out result);
+                    return base.OnKey(key, formatter, out result);
             }
         }
     }

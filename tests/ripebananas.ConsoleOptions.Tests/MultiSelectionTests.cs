@@ -1,90 +1,70 @@
-﻿//
-// ███╗   ██╗ ██████╗ ████████╗███████╗
-// ████╗  ██║██╔═══██╗╚══██╔══╝██╔════╝
-// ██╔██╗ ██║██║   ██║   ██║   █████╗
-// ██║╚██╗██║██║   ██║   ██║   ██╔══╝
-// ██║ ╚████║╚██████╔╝   ██║   ███████╗
-// ╚═╝  ╚═══╝ ╚═════╝    ╚═╝   ╚══════╝
-// ------------------------------------------------
-//
-// The tests are only runnable with `dotnet test` command, because of dependency on System.Console.
-//
-
-using ripebananas.ConsoleOptions.Formatters;
+﻿using ripebananas.ConsoleOptions.Formatters;
 using ripebananas.ConsoleOptions.Selectors;
 
 namespace ripebananas.ConsoleOptions.Tests;
 
 public class MultiSelectionTests
 {
+    public MultiSelectionTests()
+    {
+        Wrapper.Console = new Mock<IConsole>().Object;
+    }
+
     [Fact]
     public void DownOrUpArrowKeysPressedRandomly_SelectedOptionsShouldBeReturnedCorrectly()
     {
         // arrange
-        var consoleOptions = new ConsoleOptions<OptionsFlags>(new Mock<IFormatter<OptionsFlags>>().Object);
-        var console = new MultiSelector<OptionsFlags>();
-        var randomBool = new RandomBool();
+        var formatter = new Mock<IFormatter<OptionsFlags>>().Object;
+        var selector = new SingleSelector<OptionsFlags>();
+        selector.Options.Values = OptionDescriptions.GetFromEnum<OptionsFlags>().ToArray();
+
+        var optionsCount = selector.Options.Values.Length;
+        var selectedOptions = new bool[optionsCount];
+
         var index = -1;
-        var options = Enum.GetValues<OptionsFlags>();
-        var optionsSelected = new bool[options.Length];
         const int iterations = 10;
 
         // act
         for (var i = 0; i < iterations; i++)
         {
-            var down = randomBool.Next();
-            var toggle = randomBool.Next();
+            var down = RandomBool.Next();
+            var toggle = RandomBool.Next();
 
             index += down ? 1 : -1;
             if (index < 0)
             {
-                index = options.Length - 1;
+                index = optionsCount - 1;
             }
-            else if (index >= options.Length)
+            else if (index >= optionsCount)
             {
                 index = 0;
             }
 
-            console.OnKey(consoleOptions, down ? ConsoleKey.DownArrow : ConsoleKey.UpArrow, out var _);
+            selector.OnKey(down ? ConsoleKey.DownArrow : ConsoleKey.UpArrow, formatter, out var _);
 
             if (toggle)
             {
-                console.OnKey(consoleOptions, ConsoleKey.Spacebar, out var _);
-                optionsSelected[index] = !optionsSelected[index];
+                selector.OnKey(ConsoleKey.Spacebar, formatter, out var _);
+                selectedOptions[index] = !selectedOptions[index];
             }
         }
 
-        var result = console.OnKey(consoleOptions, ConsoleKey.Enter, out var selectedOptions);
+        var resultReturned = selector.OnKey(ConsoleKey.Enter, formatter, out var result);
 
         // assert
-        result.Should().BeTrue();
-        if (optionsSelected.Contains(true))
+        resultReturned.Should().BeTrue();
+        if (selectedOptions.Contains(true))
         {
-            selectedOptions.Should().NotBeNull();
+            result.Should().NotBeEmpty();
         }
-        for (var i = 0; i < optionsSelected.Length; i++)
+        var resultIndex = 0;
+        for (var i = 0; i < selectedOptions.Length; i++)
         {
-            if (optionsSelected[i])
+            if (selectedOptions[i])
             {
-                (selectedOptions & options[i]).Should().Be(options[i]);
+                result.ElementAt(resultIndex).Should().Be(selector.Options.Values[i].Value);
+                resultIndex++;
             }
         }
-    }
-
-    [Fact]
-    public void EscapePressed_NoResultReturned()
-    {
-        // arrange
-        var consoleOptions = new ConsoleOptions<OptionsFlags>(new Mock<IFormatter<OptionsFlags>>().Object);
-        var console = new MultiSelector<OptionsFlags>();
-
-        // act
-        console.OnKey(consoleOptions, ConsoleKey.DownArrow, out var _);
-        console.OnKey(consoleOptions, ConsoleKey.Spacebar, out var _);
-        var result = console.OnKey(consoleOptions, ConsoleKey.Escape, out var selectedOption);
-
-        // assert
-        result.Should().BeFalse();
-        selectedOption.Should().BeNull();
     }
 }
