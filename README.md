@@ -97,6 +97,7 @@ See the samples folder for details.
 
 ### Version 1.0.0
  - The library is largely re-written. Lot's of breaking changes from previous version.
+ - The `ripebananas.ConsoleOptions.Lib` package has been merged into the main `ripebananas.ConsoleOptions` package.
 
 ### Version 0.0.8
  - Added ANSI coloring codes and related string extension methods to make console colored output easier.
